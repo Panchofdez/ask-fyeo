@@ -53,7 +53,7 @@ const SearchBar = ({ data, setSearchResults, setSearchMode }) => {
     <Row>
       <Col span={24}>
         <AutoComplete
-          style={{ position: "relative", zIndex: 5, top: -20, width: "100%" }}
+          style={{ position: "relative", zIndex: 5, width: "100%" }}
           options={options}
           onSearch={handleSearch}
           onSelect={handleSelect}
