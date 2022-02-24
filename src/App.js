@@ -5,6 +5,7 @@ import SearchBar from "./components/SearchBar";
 import SearchResults from "./components/SearchResults";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Chatbox from "./components/Chatbox";
 import data from "./data";
 import "./App.css";
 
@@ -65,6 +66,7 @@ function App() {
         </Col>
         <Col span={4}></Col>
       </Row>
+      <Chatbox />
     </div>
   );
 }
