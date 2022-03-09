@@ -9,7 +9,6 @@ const SearchBar = ({ data, setSearchResults, setSearchMode }) => {
   const handleSearch = (value) => {
     let options = [];
     let res = [];
-    console.log("Handle Search", value);
     if (!value) {
       options = [];
     } else {

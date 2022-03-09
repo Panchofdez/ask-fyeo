@@ -57,10 +57,10 @@ html {
     justify-content: center;
   }
 }
-
+/* 
 .ant-modal-footer {
   padding: 0 !important;
-}
+} */
 
 textarea.ant-input {
   min-height: 40px !important;
