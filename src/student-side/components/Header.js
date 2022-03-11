@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Image } from "antd";
-import Logo from "../images/logo.png";
-import Ryerson from "../images/Ryerson.png";
+import Logo from "../../images/logo.png";
+import Ryerson from "../../images/Ryerson.png";
 
 const Header = () => {
   return (

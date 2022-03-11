@@ -12,14 +12,26 @@ html {
     1.3px 0.6px 10px rgba(0, 0, 0, 0.035), 2.2px 1.1px 17.9px rgba(0, 0, 0, 0.042),
     4.2px 2.1px 33.4px rgba(0, 0, 0, 0.05), 10px 5px 80px rgba(0, 0, 0, 0.07);
 }
-
+.elevated2 {
+  box-shadow: 0px 1.8px 0.9px -18px rgba(0, 0, 0, 0.028), 0px 6px 3.1px -18px rgba(0, 0, 0, 0.042),
+    0px 27px 14px -18px rgba(0, 0, 0, 0.07);
+}
 .divider {
   height: 12px;
   border: 0;
   box-shadow: inset 0 7px 7px -7px rgba(0, 0, 0, 0.1);
 }
 
-.App {
+.home {
+  flex: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.dashboard {
   flex: 1;
   min-height: 100vh;
   display: flex;
