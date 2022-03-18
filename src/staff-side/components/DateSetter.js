@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Select, DatePicker } from "antd";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -6,6 +6,21 @@ const { RangePicker } = DatePicker;
 const DateSetter = ({ getByDate, getByDateRange, getAll }) => {
   const [custom, setCustom] = useState(false);
   const [dateRange, setDateRange] = useState([]);
+
+  useEffect(() => {
+    let isReady = true;
+    const setUp = () => {
+      if (isReady) {
+        setDateRange([]);
+        setCustom(false);
+      }
+    };
+    setUp();
+    return () => {
+      isReady = false;
+    };
+  }, []);
+
   const getStartOfWeek = (d) => {
     d = new Date(d);
     var day = d.getDay(),
@@ -59,8 +74,8 @@ const DateSetter = ({ getByDate, getByDateRange, getAll }) => {
     console.log(dateStrings[0], dateStrings[1]);
     const startDate = new Date(dateStrings[0]);
     const startYear = startDate.getFullYear();
-    const startMonth = startDate.getMonth();
-    const startDay = startDate.getDate();
+    const startMonth = startDate.getMonth() + 1;
+    const startDay = startDate.getDate() + 1;
 
     const endDate = new Date(dateStrings[1]);
     const endYear = endDate.getFullYear();

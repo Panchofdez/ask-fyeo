@@ -134,20 +134,24 @@ const Chatbox = () => {
   };
 
   const onFinish = async (values) => {
-    console.log("Success:", values);
-    const response = await axios.post("http://127.0.0.1:5000/chat/start", values);
-    const { conversation } = response.data;
-    console.log("Conversation: ", conversation);
-    setConversationDetails(conversation);
-    setConvo([
-      {
-        user: "bot",
-        response: "Hello I am the Ask FYEO chatbot. Ask me your question!",
-      },
-    ]);
-    setIsModalVisible2(false);
-    setIsModalVisible(true);
-    setShowForm(false);
+    try {
+      console.log("Success:", values);
+      const response = await axios.post("http://127.0.0.1:5000/chat/start", values);
+      const { conversation } = response.data;
+      console.log("Conversation: ", conversation);
+      setConversationDetails(conversation);
+      setConvo([
+        {
+          user: "bot",
+          response: "Hello I am the Ask FYEO chatbot. Ask me your question!",
+        },
+      ]);
+      setIsModalVisible2(false);
+      setIsModalVisible(true);
+      setShowForm(false);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {

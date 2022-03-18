@@ -7,17 +7,20 @@ import ConversationList from "./staff-side/ConversationList";
 import Dashboard from "./staff-side/Dashboard";
 import Settings from "./staff-side/Settings";
 import ShowConversation from "./staff-side/components/ShowConversation";
+import ProtectedRoute from "./staff-side/ProtectedRoute";
+import { setTokenHeader } from "./api/api";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/staff" element={<StaffHome />}>
-          {/* <Route path=":conversationId" element={<Conversation />} /> */}
-          <Route path="conversations" element={<ConversationList />} />
-          <Route path="conversations/:id" element={<ShowConversation />} />
-          <Route path="settings" element={<Settings />} />
-          <Route index element={<Dashboard />} />
+        <Route path="/staff" element={<ProtectedRoute />}>
+          <Route path="/staff" element={<StaffHome />}>
+            <Route path="conversations" element={<ConversationList />} />
+            <Route path="conversations/:id" element={<ShowConversation />} />
+            <Route path="settings" element={<Settings />} />
+            <Route index element={<Dashboard />} />
+          </Route>
         </Route>
         <Route path="/" element={<Home />} />
       </Routes>

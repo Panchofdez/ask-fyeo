@@ -10,6 +10,7 @@ const ConversationList = () => {
     let isReady = true;
     const setUp = () => {
       if (isReady) {
+        console.log("Retrieving all convos");
         getAllConversations();
       }
     };

@@ -10,8 +10,12 @@ export const api = axios.create({
 
 export const setTokenHeader = (token) => {
   if (token) {
-    api.defaults.headers.common["authorization"] = `Bearer ${token}`;
+    console.log("setting token");
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    // api.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+    // api.defaults.headers.common["Content-Type"] = "application/json";
   } else {
-    delete api.defaults.headers.common["authorization"];
+    delete api.defaults.headers.common["Authorization"];
   }
+  console.log("COMMON HEADERS: ", api.defaults.headers.common);
 };

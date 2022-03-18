@@ -9,17 +9,7 @@ const StaffHome = () => {
   const [menuKey, setMenuKey] = useState("1");
   return (
     <Layout className="dashboard">
-      <Sider
-        style={{ backgroundColor: "white" }}
-        breakpoint="lg"
-        collapsedWidth="0"
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
-      >
+      <Sider style={{ backgroundColor: "white" }} breakpoint="lg" collapsedWidth="0">
         <Image width={125} src={Logo} preview={false} />
         <Menu
           style={{ marginTop: 25 }}
@@ -37,6 +27,9 @@ const StaffHome = () => {
           <Menu.Item key="3">
             <Link to="settings">Settings</Link>
           </Menu.Item>
+          {/* <Menu.Item key="4">
+            <Link to="settings">Settings</Link>
+          </Menu.Item> */}
         </Menu>
       </Sider>
       <Layout>

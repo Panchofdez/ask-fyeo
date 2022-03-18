@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { PageHeader, Button, Descriptions, List, Badge, Tag, Space } from "antd";
+import { PageHeader, Button, Descriptions, List, Badge, Tag, Space, Popconfirm, message } from "antd";
 import { useParams } from "react-router-dom";
 import { api } from "../../api/api";
 
@@ -41,6 +41,29 @@ const ShowConversation = () => {
       isReady = false;
     };
   }, []);
+
+  const updateConversation = async (conversationId) => {
+    try {
+      const response = await api.put(`/conversation/${conversationId}/`);
+      console.log(response.data);
+      setConvo(response.data);
+    } catch (e) {
+      console.log(e);
+      message.error("Error updating conversation");
+    }
+  };
+
+  function confirm(e) {
+    console.log(e);
+    updateConversation(convo.conversation.id);
+    message.success("Successfully updated conversation");
+  }
+
+  function cancel(e) {
+    console.log(e);
+    message.error("Canceled");
+  }
+
   if (Object.keys(convo).length <= 0) {
     return null;
   }
@@ -58,9 +81,16 @@ const ShowConversation = () => {
             {convo.conversation.contact && (
               <>
                 <Tag color="success">Contact</Tag>
-                <Button key="1" type="primary">
-                  Resolve
-                </Button>
+                <Popconfirm
+                  placement="bottomRight"
+                  title="This indicates you have contacted the student and handled all their questions"
+                  onConfirm={confirm}
+                  onCancel={cancel}
+                  okText="Continue"
+                  cancelText="Cancel"
+                >
+                  <Button type="primary">Resolve</Button>
+                </Popconfirm>
               </>
             )}
           </Space>,
