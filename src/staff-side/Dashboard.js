@@ -82,11 +82,21 @@ const Dashboard = () => {
     <>
       <PageHeader
         ghost={false}
-        style={{ backgroundColor: "#e6f7ff", marginBottom: 10 }}
+        style={{ backgroundColor: "#e6f7ff", marginBottom: 10, height: "150px" }}
         title="Dashboard"
         extra={[<DateSetter key={1} getByDate={getByDate} getByDateRange={getByDateRange} getAll={getAll} />]}
       ></PageHeader>
-      <div style={{ padding: 20, display: "flex", flexDirection: "column", justifyContent: "space-around", flex: 1 }}>
+      <div
+        style={{
+          padding: 20,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-around",
+          flex: 1,
+          position: "relative",
+          top: -60,
+        }}
+      >
         <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{ marginBottom: 20 }}>
           <Col className="gutter-row" span={6}>
             <Card className="elevated2">
