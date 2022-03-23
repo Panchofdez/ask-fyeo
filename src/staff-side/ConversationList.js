@@ -60,7 +60,7 @@ const ConversationList = () => {
     <>
       <PageHeader
         title="Conversations"
-        style={{ backgroundColor: "#e6f7ff" }}
+        style={{ backgroundColor: "#e6f7ff", minHeight: "150px" }}
         tags={<Tag color="blue">Running</Tag>}
         subTitle="Student convos with the chatbot"
         extra={[
@@ -80,6 +80,7 @@ const ConversationList = () => {
           </Space>
         </Row>
       </PageHeader>
+
       <DataTable data={conversations} />
     </>
   );

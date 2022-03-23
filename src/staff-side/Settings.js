@@ -80,7 +80,7 @@ const Settings = () => {
     <>
       <PageHeader
         ghost={false}
-        style={{ backgroundColor: "#e6f7ff", marginBottom: 10, height: "150px" }}
+        style={{ backgroundColor: "#e6f7ff", marginBottom: 10, minHeight: "150px" }}
         title="Settings"
       ></PageHeader>
       <Row style={{ padding: 20 }}>

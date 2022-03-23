@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "antd/dist/antd.min.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import StaffHome from "./staff-side/StaffHome";
@@ -8,13 +8,14 @@ import Dashboard from "./staff-side/Dashboard";
 import Settings from "./staff-side/Settings";
 import ShowConversation from "./staff-side/components/ShowConversation";
 import ProtectedRoute from "./staff-side/ProtectedRoute";
-import { setTokenHeader } from "./api/api";
+import LoginModal from "./student-side/components/LoginModal";
 
-function App() {
+const App = () => {
+  const [showLogin, setShowLogin] = useState(false);
   return (
     <Router>
       <Routes>
-        <Route path="/staff" element={<ProtectedRoute />}>
+        <Route path="/staff" element={<ProtectedRoute setShowLogin={setShowLogin} />}>
           <Route path="/staff" element={<StaffHome />}>
             <Route path="conversations" element={<ConversationList />} />
             <Route path="conversations/:id" element={<ShowConversation />} />
@@ -24,8 +25,9 @@ function App() {
         </Route>
         <Route path="/" element={<Home />} />
       </Routes>
+      <LoginModal showLogin={showLogin} setShowLogin={setShowLogin} />
     </Router>
   );
-}
+};
 
 export default App;

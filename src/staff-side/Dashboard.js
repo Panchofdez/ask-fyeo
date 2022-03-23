@@ -82,7 +82,7 @@ const Dashboard = () => {
     <>
       <PageHeader
         ghost={false}
-        style={{ backgroundColor: "#e6f7ff", marginBottom: 10, height: "150px" }}
+        style={{ backgroundColor: "#e6f7ff", marginBottom: 10, minHeight: "150px" }}
         title="Dashboard"
         extra={[<DateSetter key={1} getByDate={getByDate} getByDateRange={getByDateRange} getAll={getAll} />]}
       ></PageHeader>
@@ -98,36 +98,36 @@ const Dashboard = () => {
         }}
       >
         <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{ marginBottom: 20 }}>
-          <Col className="gutter-row" span={6}>
+          <Col className="gutter-row" xs={24} md={8}>
             <Card className="elevated2">
               <Statistic title="Total # Convos" value={stats.conversations.total} />
             </Card>
           </Col>
-          <Col className="gutter-row" span={6}>
+          <Col className="gutter-row" xs={24} md={8}>
             <Card className="elevated2">
               <Statistic title="Daily Average # Convos" value={stats.conversations.dailyAverage} />
             </Card>
           </Col>
-          <Col className="gutter-row" span={6}>
-            <Card className="elevated2">
-              <Statistic title="Total # Questions Asked" value={stats.queries.total} />
-            </Card>
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <Card className="elevated2">
-              <Statistic title="Chatbot Accuracy" value={stats.queries.accuracy} suffix="%" />
-            </Card>
-          </Col>
-        </Row>
-        <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-          <Col className="gutter-row" span={12}>
+          <Col className="gutter-row" xs={24} md={8}>
             <Card className="elevated2">
               <Statistic title="# Pending Conversations" value={stats.conversations.pending} />
             </Card>
           </Col>
-          <Col className="gutter-row" span={12}>
+        </Row>
+        <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+          <Col className="gutter-row" xs={24} md={8}>
             <Card className="elevated2">
               <Statistic title="# Inaccurate Responses" value={stats.queries.unresolved} />
+            </Card>
+          </Col>
+          <Col className="gutter-row" xs={24} md={8}>
+            <Card className="elevated2">
+              <Statistic title="Total # Questions Asked" value={stats.queries.total} />
+            </Card>
+          </Col>
+          <Col className="gutter-row" xs={24} md={8}>
+            <Card className="elevated2">
+              <Statistic title="Chatbot Accuracy" value={stats.queries.accuracy} suffix="%" />
             </Card>
           </Col>
         </Row>

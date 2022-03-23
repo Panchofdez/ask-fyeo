@@ -10,7 +10,9 @@ const StaffHome = () => {
   return (
     <Layout className="dashboard">
       <Sider style={{ backgroundColor: "white" }} breakpoint="lg" collapsedWidth="0">
-        <Image width={125} src={Logo} preview={false} />
+        <Link to="/">
+          <Image width={125} src={Logo} preview={false} />
+        </Link>
         <Menu
           style={{ marginTop: 25 }}
           theme="light"

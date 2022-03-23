@@ -3,7 +3,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { setTokenHeader } from "../api/api";
 import { Buffer } from "buffer";
 
-const ProtectedRoute = () => {
+const ProtectedRoute = ({ setShowLogin }) => {
   let token = localStorage.getItem("token");
   console.log("this", token);
 
@@ -17,9 +17,11 @@ const ProtectedRoute = () => {
     localStorage.removeItem("token");
   } else if (token) {
     setTokenHeader(token);
+    return <Outlet />;
   }
-
-  return token != null ? <Outlet /> : <Navigate replace to="/" />;
+  //token is null or invalid
+  setShowLogin(true);
+  return <Navigate replace to="/" />;
 };
 
 export default ProtectedRoute;

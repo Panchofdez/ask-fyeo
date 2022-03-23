@@ -44,7 +44,7 @@ const ShowConversation = () => {
 
   const updateConversation = async (conversationId) => {
     try {
-      const response = await api.put(`/conversation/${conversationId}/`);
+      const response = await api.put(`/conversation/${conversationId}`);
       console.log(response.data);
       setConvo(response.data);
     } catch (e) {
@@ -54,7 +54,7 @@ const ShowConversation = () => {
   };
 
   function confirm(e) {
-    console.log(e);
+    e.preventDefault();
     updateConversation(convo.conversation.id);
     message.success("Successfully updated conversation");
   }
@@ -76,7 +76,7 @@ const ShowConversation = () => {
         title="Conversation"
         subTitle={`# ${convo.conversation.id}`}
         extra={[
-          <Space>
+          <Space key="1">
             <Badge count={convo.queries.filter((q) => !q.resolved).length} />
             {convo.conversation.contact && (
               <>
