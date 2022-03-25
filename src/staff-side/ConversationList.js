@@ -81,7 +81,7 @@ const ConversationList = () => {
         </Row>
       </PageHeader>
 
-      <DataTable data={conversations} />
+      <DataTable data={conversations} type="conversations" />
     </>
   );
 };

@@ -2,9 +2,9 @@ import React, { useState, useRef } from "react";
 import { Table, Tag, Badge, Input, Button, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import Highlighter from "react-highlight-words";
-import { SearchOutlined } from "@ant-design/icons";
+import { SearchOutlined, CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 
-const DataTable = ({ data }) => {
+const DataTable = ({ data, type }) => {
   let navigate = useNavigate();
   const formatData = (data) => {
     return data.map((o) => ({ ...o, key: o.id }));
@@ -89,7 +89,7 @@ const DataTable = ({ data }) => {
     return newDate.slice(0, 4).join(" ");
   };
 
-  const columns = [
+  const conversationsColumns = [
     {
       title: "First Name",
       dataIndex: "firstname",
@@ -160,19 +160,66 @@ const DataTable = ({ data }) => {
       onFilter: (value, record) => record.unresolved > value,
     },
   ];
+
+  const questionsColumns = [
+    {
+      title: "Question",
+      dataIndex: "question",
+      key: "question",
+      filterSearch: (input, record) => record.value.indexOf(input) > -1,
+      ...getColumnSearchProps("question"),
+    },
+    {
+      title: "Response",
+      dataIndex: "response",
+      key: "response",
+      ellipsis: true,
+      filterSearch: (input, record) => record.value.indexOf(input) > -1,
+      ...getColumnSearchProps("response"),
+    },
+    {
+      title: "Resolved",
+      key: "resolved",
+      dataIndex: "resolved",
+      render: (resolved) => (
+        <>
+          {resolved ? (
+            <Tag icon={<CheckCircleOutlined />} color="success">
+              success
+            </Tag>
+          ) : (
+            <Tag icon={<CloseCircleOutlined />} color="error">
+              error
+            </Tag>
+          )}
+        </>
+      ),
+      filters: [
+        {
+          text: "Yes",
+          value: true,
+        },
+        {
+          text: "No",
+          value: false,
+        },
+      ],
+      onFilter: (value, record) => record.resolved === value,
+    },
+  ];
   return (
     <>
       <Table
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {
-              navigate(`/staff/conversations/${record.id}`);
+              navigate(`/staff/conversations/${type === "conversations" ? record.id : record.conversation_id}`);
             }, // click row
           };
         }}
-        columns={columns}
+        columns={type === "conversations" ? conversationsColumns : questionsColumns}
         dataSource={formatData(data)}
-        pagination={{ pageSize: 10 }}
+        pagination={{ pageSize: 10, showSizeChanger: false }}
       />
     </>
   );

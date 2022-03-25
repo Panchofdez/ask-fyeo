@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import StaffHome from "./staff-side/StaffHome";
 import Home from "./student-side/Home";
 import ConversationList from "./staff-side/ConversationList";
+import QuestionList from "./staff-side/QuestionList";
 import Dashboard from "./staff-side/Dashboard";
 import Settings from "./staff-side/Settings";
 import ShowConversation from "./staff-side/components/ShowConversation";
@@ -17,6 +18,7 @@ const App = () => {
       <Routes>
         <Route path="/staff" element={<ProtectedRoute setShowLogin={setShowLogin} />}>
           <Route path="/staff" element={<StaffHome />}>
+            <Route path="questions" element={<QuestionList />} />
             <Route path="conversations" element={<ConversationList />} />
             <Route path="conversations/:id" element={<ShowConversation />} />
             <Route path="settings" element={<Settings />} />

@@ -27,11 +27,11 @@ const StaffHome = () => {
             <Link to="conversations">Conversations</Link>
           </Menu.Item>
           <Menu.Item key="3">
+            <Link to="questions">Questions</Link>
+          </Menu.Item>
+          <Menu.Item key="4">
             <Link to="settings">Settings</Link>
           </Menu.Item>
-          {/* <Menu.Item key="4">
-            <Link to="settings">Settings</Link>
-          </Menu.Item> */}
         </Menu>
       </Sider>
       <Layout>
