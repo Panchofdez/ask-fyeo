@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { PageHeader, Button, Descriptions, List, Badge, Tag, Space, Popconfirm, message } from "antd";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { api } from "../../api/api";
 
 const data = [
@@ -21,21 +21,16 @@ const data = [
 const ShowConversation = () => {
   const [convo, setConvo] = useState({});
   let params = useParams();
+  const navigate = useNavigate();
   useEffect(() => {
     let isReady = true;
-    const fetchConvo = async () => {
-      try {
-        const response = await api.get(`/conversations/${params.id}`);
-        console.log("RESPONSE: ", response.data);
-        if (isReady) {
-          setConvo(response.data);
-        }
-      } catch (e) {
-        console.log(e);
+    const setup = () => {
+      if (isReady) {
+        fetchConvo();
       }
     };
 
-    fetchConvo();
+    setup();
 
     return () => {
       isReady = false;
@@ -53,6 +48,18 @@ const ShowConversation = () => {
     }
   };
 
+  const fetchConvo = async () => {
+    try {
+      const response = await api.get(`/conversations/${params.id}`);
+      console.log("RESPONSE: ", response.data);
+      setConvo(response.data);
+    } catch (e) {
+      console.log(e);
+      if (e.response.status === 403 || e.response.status === 401) {
+        navigate("/");
+      }
+    }
+  };
   function confirm(e) {
     e.preventDefault();
     updateConversation(convo.conversation.id);

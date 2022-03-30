@@ -5,11 +5,13 @@ import StaffHome from "./staff-side/StaffHome";
 import Home from "./student-side/Home";
 import ConversationList from "./staff-side/ConversationList";
 import QuestionList from "./staff-side/QuestionList";
+import FAQList from "./staff-side/FAQList";
 import Dashboard from "./staff-side/Dashboard";
 import Settings from "./staff-side/Settings";
 import ShowConversation from "./staff-side/components/ShowConversation";
 import ProtectedRoute from "./staff-side/ProtectedRoute";
 import LoginModal from "./student-side/components/LoginModal";
+import UpdateFAQ from "./staff-side/components/UpdateFAQ";
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -19,6 +21,9 @@ const App = () => {
         <Route path="/staff" element={<ProtectedRoute setShowLogin={setShowLogin} />}>
           <Route path="/staff" element={<StaffHome />}>
             <Route path="questions" element={<QuestionList />} />
+            <Route path="faq/update" element={<UpdateFAQ />} />
+            <Route path="faq/add" element={<UpdateFAQ />} />
+            <Route path="faq" element={<FAQList />} />
             <Route path="conversations" element={<ConversationList />} />
             <Route path="conversations/:id" element={<ShowConversation />} />
             <Route path="settings" element={<Settings />} />

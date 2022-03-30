@@ -8,8 +8,14 @@ const { Sider, Content } = Layout;
 const StaffHome = () => {
   const [menuKey, setMenuKey] = useState("1");
   return (
-    <Layout className="dashboard">
-      <Sider style={{ backgroundColor: "white" }} breakpoint="lg" collapsedWidth="0">
+    <Layout className="dashboard" hasSider>
+      <Sider
+        style={{
+          backgroundColor: "white",
+        }}
+        breakpoint="lg"
+        collapsedWidth="0"
+      >
         <Link to="/">
           <Image width={125} src={Logo} preview={false} />
         </Link>
@@ -30,6 +36,9 @@ const StaffHome = () => {
             <Link to="questions">Questions</Link>
           </Menu.Item>
           <Menu.Item key="4">
+            <Link to="faq">FAQ</Link>
+          </Menu.Item>
+          <Menu.Item key="5">
             <Link to="settings">Settings</Link>
           </Menu.Item>
         </Menu>

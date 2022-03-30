@@ -3,18 +3,18 @@ import { Row, Col, Statistic, Card, PageHeader, Divider } from "antd";
 import { api } from "../api/api";
 import DateSetter from "./components/DateSetter";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Label } from "recharts";
-
-const style = { background: "#0092ff", padding: "8px 0" };
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [stats, setStats] = useState({});
   const [chartData, setChartData] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     let isReady = true;
     const setUp = () => {
       if (isReady) {
         console.log("Retrieving all stats");
-        getAll();
+        getStats();
         getChartData();
       }
     };
@@ -23,15 +23,6 @@ const Dashboard = () => {
       isReady = false;
     };
   }, []);
-  const getByDate = (year, month, day) => {
-    getStatsByDate(year, month, day);
-  };
-  const getByDateRange = (startYear, startMonth, startDay, endYear, endMonth, endDay) => {
-    getStatsByDateRange(startYear, startMonth, startDay, endYear, endMonth, endDay);
-  };
-  const getAll = () => {
-    getStats();
-  };
 
   const getChartData = async () => {
     try {
@@ -40,6 +31,9 @@ const Dashboard = () => {
       setChartData(response.data);
     } catch (e) {
       console.log(e);
+      if (e.response.status === 403 || e.response.status === 401) {
+        navigate("/");
+      }
     }
   };
 
@@ -50,6 +44,9 @@ const Dashboard = () => {
       setStats(response.data);
     } catch (e) {
       console.log(e);
+      if (e.response.status === 403 || e.response.status === 401) {
+        navigate("/");
+      }
     }
   };
 
@@ -84,7 +81,9 @@ const Dashboard = () => {
         ghost={false}
         style={{ backgroundColor: "#e6f7ff", marginBottom: 10, minHeight: "150px" }}
         title="Dashboard"
-        extra={[<DateSetter key={1} getByDate={getByDate} getByDateRange={getByDateRange} getAll={getAll} />]}
+        extra={[
+          <DateSetter key={1} getByDate={getStatsByDate} getByDateRange={getStatsByDateRange} getAll={getStats} />,
+        ]}
       ></PageHeader>
       <div
         style={{
@@ -117,12 +116,12 @@ const Dashboard = () => {
         <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
           <Col className="gutter-row" xs={24} md={8}>
             <Card className="elevated2">
-              <Statistic title="# Inaccurate Responses" value={stats.queries.unresolved} />
+              <Statistic title="Total # Questions Asked" value={stats.queries.total} />
             </Card>
           </Col>
           <Col className="gutter-row" xs={24} md={8}>
             <Card className="elevated2">
-              <Statistic title="Total # Questions Asked" value={stats.queries.total} />
+              <Statistic title="# Inaccurate Responses" value={stats.queries.unresolved} />
             </Card>
           </Col>
           <Col className="gutter-row" xs={24} md={8}>

@@ -31,6 +31,9 @@ const Settings = () => {
     } catch (e) {
       console.log(e);
       message.error(e.response.data.error);
+      if (e.response.status === 403 || e.response.status === 401) {
+        navigate("/");
+      }
     }
   };
 
@@ -93,7 +96,7 @@ const Settings = () => {
                 renderItem={(item) => (
                   <List.Item
                     actions={[
-                      <a
+                      <Button
                         key="1"
                         onClick={() => {
                           console.log(item);
@@ -101,8 +104,8 @@ const Settings = () => {
                         }}
                         style={{ color: "red" }}
                       >
-                        remove
-                      </a>,
+                        Remove
+                      </Button>,
                     ]}
                   >
                     <List.Item.Meta avatar={<Avatar icon={<UserOutlined />} />} title={item.email} />
