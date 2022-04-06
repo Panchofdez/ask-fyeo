@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { List, PageHeader, Tag, Card, Button, Space } from "antd";
+import { List, PageHeader, Tag, Card, Button, Space, Statistic } from "antd";
 import { api } from "../api/api";
 import { useNavigate } from "react-router-dom";
 
@@ -75,8 +75,28 @@ const FAQList = () => {
                   <Button onClick={() => navigate("/staff/faq/update", { state: { faq: item, mode: "update" } })}>
                     Update
                   </Button>
+                  <Button onClick={() => navigate(`/staff/faq/${item.id}`, { state: { faq: item } })}>
+                    View Details
+                  </Button>
                 </Space>
               }
+              actions={[
+                <Statistic title="# Questions" value={item.queries} precision={0} valueStyle={{ color: "#3f8600" }} />,
+                <Statistic
+                  title="Hit Rate"
+                  value={item.hit_rate}
+                  precision={2}
+                  valueStyle={{ color: "#3f8600" }}
+                  suffix="%"
+                />,
+                <Statistic
+                  title="Success Rate"
+                  value={item.success_rate}
+                  precision={2}
+                  valueStyle={{ color: "#3f8600" }}
+                  suffix="%"
+                />,
+              ]}
             >
               <Card.Meta
                 style={{ marginBottom: 10 }}

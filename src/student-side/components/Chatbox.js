@@ -331,7 +331,6 @@ const Chatbox = () => {
             <Form.Item name="program" label="Program" rules={[{ required: true }]}>
               <Select placeholder="Select your program" allowClear>
                 <Select.Option value="Aerospace">Aerospace</Select.Option>
-                <Select.Option value="Architectural">Architectural</Select.Option>
                 <Select.Option value="Biomedical">Biomedical</Select.Option>
                 <Select.Option value="Chemical">Chemical</Select.Option>
                 <Select.Option value="Civil">Civil</Select.Option>
