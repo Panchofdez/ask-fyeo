@@ -96,3 +96,8 @@ textarea.ant-input {
   padding: 10px 10px 10px 12px;
   border-radius: 20px;
 }
+
+.rounded {
+  border-radius: 20px;
+  overflow: hidden;
+}
