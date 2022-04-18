@@ -15,7 +15,16 @@ const Home = () => {
 
   return (
     <div className="home">
-      <Row style={{ marginTop: 50, display: "flex", flexDirection: "row", justifyContent: "center" }}>
+      <Row
+        style={{
+          marginTop: "10vh",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          zIndex: 3,
+          marginBottom: "20vh",
+        }}
+      >
         <Col xs={24} md={12}>
           <Header />
         </Col>
@@ -29,20 +38,20 @@ const Home = () => {
           </Row>
         </Col>
       </Row>
-      <Row
-        style={{
-          backgroundColor: "#fcfcfc",
-          paddingTop: 40,
-          paddingBottom: 40,
-          marginTop: 50,
-        }}
-      >
-        <Col span={4}></Col>
-        <Col span={16}>
-          <Footer></Footer>
-        </Col>
-        <Col span={4}></Col>
-      </Row>
+      {/* <Row
+          style={{
+            backgroundColor: "transparent",
+            paddingTop: 40,
+            paddingBottom: 40,
+            zIndex: 3,
+          }}
+        >
+          <Col span={4}></Col>
+          <Col span={16}>
+            <Footer></Footer>
+          </Col>
+          <Col span={4}></Col>
+        </Row> */}
     </div>
   );
 };

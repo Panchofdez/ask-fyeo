@@ -30,6 +30,8 @@ html {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  background: rgb(191, 222, 241);
+  background: linear-gradient(90deg, rgba(191, 222, 241, 1) 24%, rgba(246, 246, 246, 1) 66%);
 }
 
 .dashboard {
@@ -100,4 +102,19 @@ textarea.ant-input {
 .rounded {
   border-radius: 20px;
   overflow: hidden;
+}
+
+.gradient {
+  background: rgb(240, 247, 255);
+  background: linear-gradient(90deg, rgba(240, 247, 255, 1) 0%, rgba(229, 239, 250, 1) 40%, rgba(181, 198, 224, 1) 73%);
+}
+
+.gradient2 {
+  background: rgb(240, 247, 255);
+  background: linear-gradient(90deg, rgba(240, 247, 255, 1) 0%, rgba(229, 239, 250, 1) 58%);
+}
+
+.gradient3 {
+  background: rgb(191, 222, 241);
+  background: linear-gradient(90deg, rgba(191, 222, 241, 1) 25%, rgba(246, 246, 246, 1) 79%);
 }

@@ -44,13 +44,13 @@ const FAQList = () => {
         subTitle="Frequently asked questions"
         extra={[
           <Button
+            key={1}
             onClick={() =>
               navigate("/staff/faq/update", { state: { faq: { tag: "", patterns: [], responses: [] }, mode: "add" } })
             }
           >
             Add To FAQ
           </Button>,
-          <Button>Train Model</Button>,
         ]}
       >
         {/* <Row>
@@ -65,7 +65,7 @@ const FAQList = () => {
         itemLayout="vertical"
         size="large"
         dataSource={faq}
-        renderItem={(item) => (
+        renderItem={(item, i) => (
           <List.Item key={item.tag}>
             <Card
               className="elevated2"
@@ -81,8 +81,15 @@ const FAQList = () => {
                 </Space>
               }
               actions={[
-                <Statistic title="# Questions" value={item.queries} precision={0} valueStyle={{ color: "#3f8600" }} />,
                 <Statistic
+                  key={1}
+                  title="# Questions"
+                  value={item.queries}
+                  precision={0}
+                  valueStyle={{ color: "#3f8600" }}
+                />,
+                <Statistic
+                  key={2}
                   title="Hit Rate"
                   value={item.hit_rate}
                   precision={2}
@@ -90,6 +97,7 @@ const FAQList = () => {
                   suffix="%"
                 />,
                 <Statistic
+                  key={3}
                   title="Success Rate"
                   value={item.success_rate}
                   precision={2}
@@ -100,14 +108,16 @@ const FAQList = () => {
             >
               <Card.Meta
                 style={{ marginBottom: 10 }}
-                description={item.patterns.map((p) => (
-                  <Tag color="cyan" style={{ marginBottom: 5 }}>
+                description={item.patterns.map((p, i) => (
+                  <Tag key={i} color="cyan" style={{ marginBottom: 5 }}>
                     {p}
                   </Tag>
                 ))}
               />
-              {item.responses.map((r) => (
-                <Card type="inner">{r}</Card>
+              {item.responses.map((r, i) => (
+                <Card key={i} type="inner" style={{ wordWrap: "break-word" }}>
+                  {r}
+                </Card>
               ))}
             </Card>
           </List.Item>

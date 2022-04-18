@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Card, Form, Select, Button, Input } from "antd";
 import axios from "axios";
 
@@ -27,6 +27,7 @@ const Chatbot = () => {
                 backgroundColor: "#fafafa",
                 maxWidth: "60%",
                 marginBottom: 10,
+                wordWrap: "break-word",
               }}
               className="elevated"
             >
@@ -45,6 +46,7 @@ const Chatbot = () => {
                 opacity: 0.9,
                 maxWidth: "60%",
                 marginBottom: 10,
+                wordWrap: "break-word",
               }}
               className="elevated"
             >
@@ -94,7 +96,7 @@ const Chatbot = () => {
         ...convo,
         {
           user: "bot",
-          response: `Hello ${values.firstname} nice to meet you! Ask me your question or concern`,
+          response: `Hello ${values.firstname} nice to meet you! I am the FYEO chatbot and I'm here to answer any of your questions about your first year of engineering. Ask me your question!`,
         },
       ]);
       setShowForm(false);
