@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { PageHeader, Tag, Statistic, Row, Space } from "antd";
+import { PageHeader, Statistic, Row, Space, message } from "antd";
 import { api } from "../api/api";
 import DataTable from "./components/DataTable";
 import DateSetter from "./components/DateSetter";
@@ -12,7 +12,6 @@ const QuestionList = () => {
     let isReady = true;
     const setUp = () => {
       if (isReady) {
-        console.log("Retrieving all questions");
         getAllQuestions();
       }
     };
@@ -25,10 +24,9 @@ const QuestionList = () => {
     try {
       const response = await api.get("/queries");
       const { queries } = response.data;
-      console.log("Questions: ", queries);
       setQuestions(queries);
     } catch (e) {
-      console.log(e);
+      message.error(e.response.data.error);
       if (e.response.status === 403 || e.response.status === 401) {
         navigate("/");
       }
@@ -37,27 +35,23 @@ const QuestionList = () => {
 
   const getQuestionsByDate = async (year, month, day) => {
     try {
-      console.log(year, month, day);
       const response = await api.get(`/queries/date?year=${year}&month=${month}&day=${day}`);
       const { queries } = response.data;
-      console.log("Questions by date: ", queries);
       setQuestions(queries);
     } catch (e) {
-      console.log(e);
+      message.error(e.response.data.error);
     }
   };
 
   const getQuestionsByDateRange = async (startYear, startMonth, startDay, endYear, endMonth, endDay) => {
     try {
-      console.log(startYear, startMonth, startDay, endYear, endMonth, endDay);
       const response = await api.get(
         `/queries/daterange?startYear=${startYear}&startMonth=${startMonth}&startDay=${startDay}&endYear=${endYear}&endMonth=${endMonth}&endDay=${endDay}`
       );
       const { queries } = response.data;
-      console.log("Questions by date range: ", queries);
       setQuestions(queries);
     } catch (e) {
-      console.log(e);
+      message.error(e.response.data.error);
     }
   };
 

@@ -16,10 +16,8 @@ const LoginModal = ({ showLogin, setShowLogin }) => {
 
   const onFinish = async (values) => {
     try {
-      console.log("Success:", values);
       const response = await api.post("/login", values);
       const { token } = response.data;
-      console.log("token: ", token);
       form.resetFields();
       localStorage.setItem("token", token);
       setTokenHeader(token);
@@ -27,14 +25,10 @@ const LoginModal = ({ showLogin, setShowLogin }) => {
       setShowLogin(false);
       navigate("/staff");
     } catch (e) {
-      console.log(e);
       message.error(e.response.data.error);
     }
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
   return (
     <Modal
       title="Staff Login"
@@ -54,7 +48,7 @@ const LoginModal = ({ showLogin, setShowLogin }) => {
           wrapperCol={{ span: 16 }}
           initialValues={{ remember: true }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
+          onFinishFailed={() => {}}
           autoComplete="off"
         >
           <Form.Item

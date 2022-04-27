@@ -29,7 +29,6 @@ const Settings = () => {
       const { staff } = response.data;
       setStaffMembers(staff);
     } catch (e) {
-      console.log(e);
       message.error(e.response.data.error);
       if (e.response.status === 403 || e.response.status === 401) {
         navigate("/");
@@ -44,7 +43,6 @@ const Settings = () => {
       setStaffMembers(staff);
       message.success("Successfully removed staff member");
     } catch (e) {
-      console.log(e);
       message.error(e.response.data.error);
     }
   };
@@ -56,15 +54,16 @@ const Settings = () => {
       setStaffMembers(staff);
       message.success("Successfully added staff member");
     } catch (e) {
-      console.log(e);
       message.error(e.response.data.error);
     }
   };
 
   const onFinish = (values) => {
-    console.log("Success:", values);
     const { email } = values;
-    console.log(email.split("@"));
+    if (email.indexOf("@") === -1) {
+      message.error("Invalid email");
+      return;
+    }
     const isRyersonEmail = email.split("@").at(1).startsWith("ryerson");
     if (!isRyersonEmail) {
       message.error("Must be a Ryerson email");
@@ -72,10 +71,6 @@ const Settings = () => {
     }
     addStaff(email);
     form.resetFields();
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
   };
 
   const signOut = () => {
@@ -110,7 +105,6 @@ const Settings = () => {
                           removeStaff(item.id);
                         }}
                         onCancel={(e) => {
-                          console.log(e);
                           message.error("Canceled");
                         }}
                         okText="Continue"
@@ -136,7 +130,7 @@ const Settings = () => {
                 wrapperCol={{ span: 16 }}
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
+                onFinishFailed={() => {}}
                 autoComplete="off"
               >
                 <Form.Item

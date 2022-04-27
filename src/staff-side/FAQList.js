@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { List, PageHeader, Tag, Card, Button, Space, Statistic, Row, Col, Input, Popover } from "antd";
+import { List, PageHeader, Tag, Card, Button, Space, Statistic, Row, Col, Input, Popover, message } from "antd";
 import { api } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { InfoCircleOutlined } from "@ant-design/icons";
@@ -12,7 +12,6 @@ const FAQList = () => {
     let isReady = true;
     const setUp = () => {
       if (isReady) {
-        console.log("Retrieving all convos");
         getFAQ();
       }
     };
@@ -26,10 +25,9 @@ const FAQList = () => {
     try {
       const response = await api.get("/faq");
       const { FAQ } = response.data;
-      console.log(FAQ);
       setFaq(FAQ);
     } catch (e) {
-      console.log(e);
+      message.error(e.response.data.error);
       if (e.response.status === 403 || e.response.status === 401) {
         navigate("/");
       }

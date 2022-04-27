@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Statistic, Card, PageHeader, Divider } from "antd";
+import { Row, Col, Statistic, Card, PageHeader, Divider, message } from "antd";
 import { api } from "../api/api";
 import DateSetter from "./components/DateSetter";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Label } from "recharts";
@@ -13,7 +13,6 @@ const Dashboard = () => {
     let isReady = true;
     const setUp = () => {
       if (isReady) {
-        console.log("Retrieving all stats");
         getStats();
         getChartData();
       }
@@ -27,10 +26,9 @@ const Dashboard = () => {
   const getChartData = async () => {
     try {
       const response = await api.get("/stats/chart");
-      console.log(response.data);
       setChartData(response.data);
     } catch (e) {
-      console.log(e);
+      message.error(e.response.data.error);
       if (e.response.status === 403 || e.response.status === 401) {
         navigate("/");
       }
@@ -40,10 +38,9 @@ const Dashboard = () => {
   const getStats = async () => {
     try {
       const response = await api.get("/stats");
-      console.log(response.data);
       setStats(response.data);
     } catch (e) {
-      console.log(e);
+      message.error(e.response.data.error);
       if (e.response.status === 403 || e.response.status === 401) {
         navigate("/");
       }
@@ -53,10 +50,9 @@ const Dashboard = () => {
   const getStatsByDate = async (year, month, day) => {
     try {
       const response = await api.get(`/stats/date?year=${year}&month=${month}&day=${day}`);
-      console.log("BY DATE: ", response.data);
       setStats(response.data);
     } catch (e) {
-      console.log(e);
+      message.error(e.response.data.error);
     }
   };
   const getStatsByDateRange = async (startYear, startMonth, startDay, endYear, endMonth, endDay) => {
@@ -64,10 +60,9 @@ const Dashboard = () => {
       const response = await api.get(
         `/stats/daterange?startYear=${startYear}&startMonth=${startMonth}&startDay=${startDay}&endYear=${endYear}&endMonth=${endMonth}&endDay=${endDay}`
       );
-      console.log("BY DATE RANGE: ", response.data);
       setStats(response.data);
     } catch (e) {
-      console.log(e);
+      message.error(e.response.data.error);
     }
   };
 

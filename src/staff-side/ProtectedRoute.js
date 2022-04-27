@@ -6,13 +6,11 @@ import { message } from "antd";
 
 const ProtectedRoute = ({ setShowLogin }) => {
   let token = localStorage.getItem("token");
-  console.log("this", token);
 
   const isTokenExpired = (token) =>
     Date.now() >= JSON.parse(Buffer.from(token.split(".")[1], "base64").toString()).exp * 1000;
 
   if (token && isTokenExpired(token)) {
-    console.log("is expired");
     token = null;
     setTokenHeader();
     message.error("Session has expired. Please sign in again");

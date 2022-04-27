@@ -26,11 +26,9 @@ const StaffHome = () => {
 
   const getKey = () => {
     let key = "1";
-    console.log(location.pathname);
     if (location.pathname.indexOf("conversations") !== -1) {
       key = "2";
     } else if (location.pathname.indexOf("questions") !== -1) {
-      console.log("ARRIVED");
       key = "3";
     } else if (location.pathname.indexOf("faq") !== -1) {
       key = "4";

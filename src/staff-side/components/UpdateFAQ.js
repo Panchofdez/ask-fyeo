@@ -24,8 +24,7 @@ const UpdateFAQ = () => {
 
   const updateFAQ = async () => {
     try {
-      const response = await api.put("/faq", currFAQ);
-      const { FAQ } = response.data;
+      await api.put("/faq", currFAQ);
       message.success("Successfully saved changes");
     } catch (e) {
       message.error(e.response.data.error);
@@ -39,8 +38,7 @@ const UpdateFAQ = () => {
       return;
     }
     try {
-      const response = await api.post("/faq", currFAQ);
-      const { FAQ } = response.data;
+      await api.post("/faq", currFAQ);
       message.success("You successfully added to the FAQ");
       navigate("/staff/faq");
     } catch (e) {
@@ -50,8 +48,7 @@ const UpdateFAQ = () => {
   const deleteFAQ = async () => {
     try {
       const { id } = currFAQ;
-      const response = await api.delete(`/faq/${id}`);
-      const { FAQ } = response.data;
+      await api.delete(`/faq/${id}`);
       message.success("Successfully saved changes");
       navigate("/staff/faq");
     } catch (e) {
@@ -123,7 +120,7 @@ const UpdateFAQ = () => {
                   placement="bottomRight"
                   title="Are you sure to add this to the FAQ"
                   onConfirm={() => addFAQ()}
-                  onCancel={() => console.log("cancelled")}
+                  onCancel={() => {}}
                   okText="Yes"
                   cancelText="No"
                 >

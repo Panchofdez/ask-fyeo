@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Form, Select, Button, Input } from "antd";
+import { Card, Form, Select, Button, Input, message } from "antd";
 import axios from "axios";
 
 const NORMAL_STATE = "normal";
@@ -59,17 +59,14 @@ const Chatbot = () => {
   };
 
   const fetchResponse = async (question) => {
-    console.log("QUESTION: ", question);
     try {
       const conversation_id = conversationDetails.id;
-      console.log("CONVO ID: ", conversation_id);
       const botResponse = await axios.post(`http://127.0.0.1:5000/chat/answer`, {
         question,
         conversation_id,
       });
       const { query } = botResponse.data;
       const { id, response } = query;
-      console.log("BOT RESPONSE: ", query);
       setConvo([
         ...convo,
         { user: "123", response: question },
@@ -80,17 +77,15 @@ const Chatbot = () => {
       //Update the queries object
       setQueries([...queries, id]);
       setChatState(CHECK_RESPONSE_STATE);
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      message.error(e.response.data.error);
     }
   };
 
   const onFinish = async (values) => {
     try {
-      console.log("Success:", values);
       const response = await axios.post("http://127.0.0.1:5000/chat/start", values);
       const { conversation } = response.data;
-      console.log("Conversation: ", conversation);
       setConversationDetails(conversation);
       setConvo([
         ...convo,
@@ -101,26 +96,20 @@ const Chatbot = () => {
       ]);
       setShowForm(false);
     } catch (e) {
-      console.log(e);
+      message.error(e.response.data.error);
     }
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
   };
 
   const resolveQuery = async () => {
     try {
       const conversation_id = conversationDetails.id;
       const query_id = queries[queries.length - 1];
-      console.log("RESOLVE QUERY:");
-      console.log("conversation_id: ", conversation_id);
-      console.log("query_id: ", query_id);
+
       const response = await axios.put(`http://127.0.0.1:5000/chat/resolve`, { conversation_id, query_id });
       const { query } = response.data;
       setQueries([...queries, query.id]);
     } catch (e) {
-      console.log(e);
+      message.error(e.response.data.error);
     }
   };
 
@@ -131,7 +120,7 @@ const Chatbot = () => {
       const { conversation } = response.data;
       setConversationDetails(conversation);
     } catch (e) {
-      console.log(e);
+      message.error(e.response.data.error);
     }
   };
 
@@ -230,7 +219,7 @@ const Chatbot = () => {
             wrapperCol={{ span: 18 }}
             initialValues={{ remember: true }}
             onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
+            onFinishFailed={() => {}}
             autoComplete="off"
           >
             <Form.Item
