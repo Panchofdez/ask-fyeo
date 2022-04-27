@@ -96,7 +96,7 @@ const Chatbot = () => {
         ...convo,
         {
           user: "bot",
-          response: `Hello ${values.firstname} nice to meet you! I am the FYEO chatbot and I'm here to answer any of your questions about your first year of engineering. Ask me your question!`,
+          response: `Hello ${values.firstname} it's nice to meet you! I am the FYEO chatbot and I'm here to answer any of your questions about your first year of engineering. Ask me your question!`,
         },
       ]);
       setShowForm(false);

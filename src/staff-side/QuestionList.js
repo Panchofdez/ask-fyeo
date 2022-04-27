@@ -66,7 +66,6 @@ const QuestionList = () => {
       <PageHeader
         title="Questions"
         style={{ backgroundColor: "#e6f7ff", minHeight: "150px" }}
-        tags={<Tag color="blue">Running</Tag>}
         subTitle="Student questions and their corresponding chatbot response"
         extra={[
           <DateSetter

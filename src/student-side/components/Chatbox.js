@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button, Input, Tooltip, Form, Select } from "antd";
+import { Modal, Button, Input, Tooltip, Form, Select, message } from "antd";
 import { MessageOutlined } from "@ant-design/icons";
 import axios from "axios";
 
@@ -128,8 +128,9 @@ const Chatbox = () => {
       //Update the queries object
       setQueries([...queries, id]);
       setChatState(CHECK_RESPONSE_STATE);
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
+      message.error(e);
     }
   };
 
@@ -151,6 +152,7 @@ const Chatbox = () => {
       setShowForm(false);
     } catch (e) {
       console.log(e);
+      message.error(e);
     }
   };
 
@@ -170,6 +172,7 @@ const Chatbox = () => {
       setQueries([...queries, query.id]);
     } catch (e) {
       console.log(e);
+      message.error(e);
     }
   };
 
@@ -181,6 +184,7 @@ const Chatbox = () => {
       setConversationDetails(conversation);
     } catch (e) {
       console.log(e);
+      message.error(e);
     }
   };
 

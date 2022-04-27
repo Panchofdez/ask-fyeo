@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Layout, Menu, Image } from "antd";
 import Logo from "../images/logo.png";
 import { Link, Outlet, useLocation } from "react-router-dom";
@@ -8,6 +8,21 @@ const { Sider, Content } = Layout;
 const StaffHome = () => {
   const [menuKey, setMenuKey] = useState("1");
   const location = useLocation();
+
+  useEffect(() => {
+    let isReady = true;
+
+    const setUp = () => {
+      let newKey = getKey();
+      if (isReady) {
+        setMenuKey(newKey);
+      }
+    };
+    setUp();
+    return () => {
+      isReady = false;
+    };
+  }, [location]);
 
   const getKey = () => {
     let key = "1";

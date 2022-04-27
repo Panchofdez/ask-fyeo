@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { setTokenHeader } from "../api/api";
 import { Buffer } from "buffer";
+import { message } from "antd";
 
 const ProtectedRoute = ({ setShowLogin }) => {
   let token = localStorage.getItem("token");
@@ -14,6 +15,7 @@ const ProtectedRoute = ({ setShowLogin }) => {
     console.log("is expired");
     token = null;
     setTokenHeader();
+    message.error("Session has expired. Please sign in again");
     localStorage.removeItem("token");
   } else if (token) {
     setTokenHeader(token);

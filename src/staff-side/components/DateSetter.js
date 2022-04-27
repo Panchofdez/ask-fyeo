@@ -29,7 +29,6 @@ const DateSetter = ({ getByDate, getByDateRange, getAll }) => {
   };
   const getStartOfMonth = (d) => {
     d = new Date(d.getFullYear(), d.getMonth(), 1);
-    console.log("D: ", d);
     return d;
   };
 
@@ -38,7 +37,6 @@ const DateSetter = ({ getByDate, getByDateRange, getAll }) => {
   };
 
   const handleChange = (value) => {
-    console.log(`selected ${value}`);
     if (value === "custom") {
       setCustom(true);
     } else {
@@ -61,26 +59,23 @@ const DateSetter = ({ getByDate, getByDateRange, getAll }) => {
       } else if (mode === "year") {
         fromDate = getStartOfYear(currentDate);
       }
-      console.log("FROM DATE", fromDate);
       let year = fromDate.getFullYear();
       let month = fromDate.getMonth() + 1;
       let day = fromDate.getDate();
-      console.log(year, month, day);
       getByDate(year, month, day);
     }
   };
 
   const handleDateChange = (dates, dateStrings) => {
-    console.log(dateStrings[0], dateStrings[1]);
-    const startDate = new Date(dateStrings[0]);
-    const startYear = startDate.getFullYear();
-    const startMonth = startDate.getMonth() + 1;
-    const startDay = startDate.getDate() + 1;
+    let startDate = dateStrings[0].split("-");
+    const startYear = parseInt(startDate[0]);
+    const startMonth = parseInt(startDate[1]);
+    const startDay = parseInt(startDate[2]);
 
-    const endDate = new Date(dateStrings[1]);
-    const endYear = endDate.getFullYear();
-    const endMonth = endDate.getMonth() + 1;
-    const endDay = endDate.getDate() + 1;
+    const endDate = dateStrings[1].split("-");
+    const endYear = parseInt(endDate[0]);
+    const endMonth = parseInt(endDate[1]);
+    const endDay = parseInt(endDate[2]);
     setDateRange(dates);
     getByDateRange(startYear, startMonth, startDay, endYear, endMonth, endDay);
   };

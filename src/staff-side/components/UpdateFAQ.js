@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { List, PageHeader, Tag, Card, Button, message, Row, Col, Input, Popconfirm } from "antd";
+import { List, PageHeader, Tag, Card, Button, message, Row, Col, Input, Popconfirm, Popover, Space } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import { api } from "../../api/api";
+import { InfoCircleOutlined } from "@ant-design/icons";
 
 const UpdateFAQ = () => {
   const [currFAQ, setCurrFAQ] = useState({});
@@ -25,10 +26,8 @@ const UpdateFAQ = () => {
     try {
       const response = await api.put("/faq", currFAQ);
       const { FAQ } = response.data;
-      console.log(FAQ);
       message.success("Successfully saved changes");
     } catch (e) {
-      console.log(e);
       message.error(e.response.data.error);
     }
   };
@@ -42,37 +41,30 @@ const UpdateFAQ = () => {
     try {
       const response = await api.post("/faq", currFAQ);
       const { FAQ } = response.data;
-      console.log(FAQ);
       message.success("You successfully added to the FAQ");
       navigate("/staff/faq");
     } catch (e) {
-      console.log(e);
       message.error(e.response.data.error);
     }
   };
   const deleteFAQ = async () => {
     try {
       const { id } = currFAQ;
-      console.log("id", id);
       const response = await api.delete(`/faq/${id}`);
       const { FAQ } = response.data;
-      console.log(FAQ);
       message.success("Successfully saved changes");
       navigate("/staff/faq");
     } catch (e) {
-      console.log(e);
       message.error(e.response.data.error);
     }
   };
 
   const addPattern = (value) => {
     let newFAQ = { ...currFAQ, patterns: [...currFAQ.patterns, value] };
-    console.log(newFAQ);
     setCurrFAQ(newFAQ);
   };
   const addResponse = (value) => {
     let newFAQ = { ...currFAQ, responses: [...currFAQ.responses, value] };
-    console.log(newFAQ);
     setCurrFAQ(newFAQ);
   };
 
@@ -109,7 +101,7 @@ const UpdateFAQ = () => {
                   onConfirm={() => {
                     updateFAQ();
                   }}
-                  onCancel={() => console.log("cancelled")}
+                  onCancel={() => {}}
                   okText="Yes"
                   cancelText="No"
                 >
@@ -119,7 +111,7 @@ const UpdateFAQ = () => {
                   placement="bottomRight"
                   title="Are you sure to delete this from the FAQ?"
                   onConfirm={() => deleteFAQ()}
-                  onCancel={() => console.log("cancelled")}
+                  onCancel={() => {}}
                   okText="Yes"
                   cancelText="No"
                 >
@@ -157,7 +149,23 @@ const UpdateFAQ = () => {
             {mode === "add" && (
               <Card
                 style={{ marginBottom: 20 }}
-                title="Unique Tag/Label"
+                title={
+                  <div style={{ fontSize: "18px", fontWeight: "normal" }}>
+                    <Space>
+                      Unique Tag/Label
+                      <Popover
+                        placement="bottom"
+                        content={
+                          <div style={{ maxWidth: "300px" }}>
+                            Each FAQ needs a unique identifier/tag that describes the FAQ
+                          </div>
+                        }
+                      >
+                        <InfoCircleOutlined />
+                      </Popover>
+                    </Space>
+                  </div>
+                }
                 className="elevated2"
                 extra={
                   <Input
@@ -178,7 +186,27 @@ const UpdateFAQ = () => {
 
             <List
               className="elevated2"
-              header={<div style={{ fontSize: 18 }}>Possible Questions/Input</div>}
+              header={
+                <div style={{ fontSize: 18 }}>
+                  <Space>
+                    Possible Questions/Input
+                    <Popover
+                      placement="bottom"
+                      content={
+                        <div style={{ maxWidth: "300px" }}>
+                          Possible ways students can ask their question related to the FAQ. These questions will be used
+                          as training data for the chatbot. More questions means the chatbot will understand more types
+                          of questions and be more accurate
+                        </div>
+                      }
+                    >
+                      <Space>
+                        <InfoCircleOutlined />
+                      </Space>
+                    </Popover>
+                  </Space>
+                </div>
+              }
               footer={
                 <Input.TextArea
                   // className="elevated"
@@ -213,10 +241,29 @@ const UpdateFAQ = () => {
 
             <List
               className="elevated2"
-              header={<div style={{ fontSize: 18 }}>Valid Responses</div>}
+              header={
+                <div style={{ fontSize: 18 }}>
+                  <Space>
+                    Valid Responses
+                    <Popover
+                      placement="bottom"
+                      content={
+                        <div style={{ maxWidth: "300px" }}>
+                          Possible ways the chatbot can answer. When the chatbot classifies a student response as the
+                          current FAQ it will choose randomly from these provided responses
+                        </div>
+                      }
+                    >
+                      <Space>
+                        <InfoCircleOutlined />
+                      </Space>
+                    </Popover>
+                  </Space>
+                </div>
+              }
               footer={
                 <Input.TextArea
-                  className="elevated"
+                  // className="elevated"
                   rows={4}
                   maxLength={1000}
                   allowClear

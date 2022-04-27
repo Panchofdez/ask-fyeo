@@ -150,7 +150,12 @@ const DataTable = ({ data, type }) => {
       title: "Unresolved",
       key: "unresolved",
       dataIndex: "unresolved",
-      render: (unresolved) => <Badge showZero count={unresolved} />,
+      render: (unresolved) =>
+        unresolved === 0 ? (
+          <Badge showZero count={unresolved} style={{ backgroundColor: "#52c41a" }} />
+        ) : (
+          <Badge showZero count={unresolved} />
+        ),
       filters: [
         {
           text: "greater than 0",

@@ -3,21 +3,6 @@ import { PageHeader, Button, Descriptions, List, Badge, Tag, Space, Popconfirm, 
 import { useParams, useNavigate } from "react-router-dom";
 import { api } from "../../api/api";
 
-const data = [
-  {
-    title: "Ant Design Title 1",
-  },
-  {
-    title: "Ant Design Title 2",
-  },
-  {
-    title: "Ant Design Title 3",
-  },
-  {
-    title: "Ant Design Title 4",
-  },
-];
-
 const ShowConversation = () => {
   const [convo, setConvo] = useState({});
   let params = useParams();
@@ -40,21 +25,18 @@ const ShowConversation = () => {
   const updateConversation = async (conversationId) => {
     try {
       const response = await api.put(`/conversation/${conversationId}`);
-      console.log(response.data);
       setConvo(response.data);
     } catch (e) {
-      console.log(e);
-      message.error("Error updating conversation");
+      message.error(e.response.data.error);
     }
   };
 
   const fetchConvo = async () => {
     try {
       const response = await api.get(`/conversations/${params.id}`);
-      console.log("RESPONSE: ", response.data);
       setConvo(response.data);
     } catch (e) {
-      console.log(e);
+      message.error(e.response.data.error);
       if (e.response.status === 403 || e.response.status === 401) {
         navigate("/");
       }
@@ -67,7 +49,6 @@ const ShowConversation = () => {
   }
 
   function cancel(e) {
-    console.log(e);
     message.error("Canceled");
   }
 

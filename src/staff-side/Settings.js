@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Collapse, Row, Col, PageHeader, List, Avatar, message, Form, Input, Button } from "antd";
+import { Collapse, Row, Col, PageHeader, List, Avatar, message, Form, Input, Button, Popconfirm } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { api, setTokenHeader } from "../api/api";
 import { useNavigate } from "react-router-dom";
@@ -64,6 +64,12 @@ const Settings = () => {
   const onFinish = (values) => {
     console.log("Success:", values);
     const { email } = values;
+    console.log(email.split("@"));
+    const isRyersonEmail = email.split("@").at(1).startsWith("ryerson");
+    if (!isRyersonEmail) {
+      message.error("Must be a Ryerson email");
+      return;
+    }
     addStaff(email);
     form.resetFields();
   };
@@ -96,16 +102,24 @@ const Settings = () => {
                 renderItem={(item) => (
                   <List.Item
                     actions={[
-                      <Button
-                        key="1"
-                        onClick={() => {
-                          console.log(item);
+                      <Popconfirm
+                        placement="bottomRight"
+                        title="Are you sure you want to remove this staff member and their access?"
+                        onConfirm={(e) => {
+                          e.preventDefault();
                           removeStaff(item.id);
                         }}
-                        style={{ color: "red" }}
+                        onCancel={(e) => {
+                          console.log(e);
+                          message.error("Canceled");
+                        }}
+                        okText="Continue"
+                        cancelText="Cancel"
                       >
-                        Remove
-                      </Button>,
+                        <Button key="1" style={{ color: "red" }}>
+                          Remove
+                        </Button>
+                      </Popconfirm>,
                     ]}
                   >
                     <List.Item.Meta avatar={<Avatar icon={<UserOutlined />} />} title={item.email} />

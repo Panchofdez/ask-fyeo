@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { List, PageHeader, Tag, Card, Button, Space, Statistic } from "antd";
+import { List, PageHeader, Tag, Card, Button, Space, Statistic, Row, Col, Input, Popover } from "antd";
 import { api } from "../api/api";
 import { useNavigate } from "react-router-dom";
+import { InfoCircleOutlined } from "@ant-design/icons";
 
 const FAQList = () => {
   const [faq, setFaq] = useState([]);
-
+  const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     let isReady = true;
@@ -35,12 +36,43 @@ const FAQList = () => {
     }
   };
 
+  const filterFAQ = (faq, searchVal) => {
+    if (faq.length > 0) {
+      return faq.filter((f) => f.tag.toLowerCase().indexOf(searchVal.toLowerCase()) !== -1);
+    }
+    return faq;
+  };
   return (
     <>
       <PageHeader
         title="FAQ"
-        style={{ backgroundColor: "#e6f7ff", minHeight: "150px" }}
-        tags={<Tag color="blue">Running</Tag>}
+        style={{ backgroundColor: "#e6f7ff", minHeight: "150px", marginBottom: 20 }}
+        tags={
+          <Popover
+            placement="bottom"
+            content={
+              <div style={{ maxWidth: "400px" }}>
+                For each FAQ we have 3 statistics:
+                <ul>
+                  <li>
+                    # Questions: Number of student questions which the chatbot has classified as the corresponding FAQ
+                  </li>
+                  <li>
+                    Hit Rate: The percentage of all total questions asked that have been classified as the corresponding
+                    FAQ
+                  </li>
+                  <li>
+                    Success Rate: The percentage of all the questions classified as the corresponding FAQ that have
+                    resulted in a successful answer
+                  </li>
+                </ul>
+              </div>
+            }
+            title="Documentation"
+          >
+            <InfoCircleOutlined />
+          </Popover>
+        }
         subTitle="Frequently asked questions"
         extra={[
           <Button
@@ -53,18 +85,29 @@ const FAQList = () => {
           </Button>,
         ]}
       >
-        {/* <Row>
+        <Row>
           <Space size={30}>
-            <Statistic title="# Convos" value={conversations.length} />
-            <Statistic title="# Pending" value={conversations.filter((c) => c.contact).length} />
-            <Statistic title="# Unresolved" value={conversations.reduce((prev, c) => prev + c.unresolved, 0)} />
+            <Statistic title="Total #" value={faq.length} />
           </Space>
-        </Row> */}
+        </Row>
+        <Row>
+          <Col xs={24} md={12}>
+            <Input
+              size="large"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              placeholder="Search"
+              className="elevated"
+              style={{ borderRadius: 20, position: "relative", top: 35 }}
+            />
+          </Col>
+          <Col xs={24} md={12}></Col>
+        </Row>
       </PageHeader>
       <List
         itemLayout="vertical"
         size="large"
-        dataSource={faq}
+        dataSource={filterFAQ(faq, searchValue)}
         renderItem={(item, i) => (
           <List.Item key={item.tag}>
             <Card

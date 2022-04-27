@@ -22,6 +22,8 @@ const App = () => {
         <Route path="/staff" element={<ProtectedRoute setShowLogin={setShowLogin} />}>
           <Route path="/staff" element={<StaffHome />}>
             <Route path="questions" element={<QuestionList />} />
+            <Route path="questions/conversations/:id" element={<ShowConversation />} />
+            <Route path="faq/conversations/:id" element={<ShowConversation />} />
             <Route path="faq/update" element={<UpdateFAQ />} />
             <Route path="faq/add" element={<UpdateFAQ />} />
             <Route path="faq/:id" element={<ShowFAQ />} />
