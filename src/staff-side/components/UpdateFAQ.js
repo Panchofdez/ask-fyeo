@@ -209,7 +209,6 @@ const UpdateFAQ = () => {
                   // className="elevated"
                   rows={2}
                   allowClear
-                  maxLength={200}
                   placeholder="Add a possible question and press enter"
                   onPressEnter={(e) => {
                     e.preventDefault();
@@ -262,7 +261,6 @@ const UpdateFAQ = () => {
                 <Input.TextArea
                   // className="elevated"
                   rows={4}
-                  maxLength={1000}
                   allowClear
                   placeholder="Add a valid response and press enter"
                   onPressEnter={(e) => {

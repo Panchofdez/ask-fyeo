@@ -85,7 +85,7 @@ const FAQList = () => {
       >
         <Row>
           <Space size={30}>
-            <Statistic title="Total #" value={faq.length} />
+            <Statistic title="Total #" value={faq.length - 1} />
           </Space>
         </Row>
         <Row>
