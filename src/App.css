@@ -12,14 +12,29 @@ html {
     1.3px 0.6px 10px rgba(0, 0, 0, 0.035), 2.2px 1.1px 17.9px rgba(0, 0, 0, 0.042),
     4.2px 2.1px 33.4px rgba(0, 0, 0, 0.05), 10px 5px 80px rgba(0, 0, 0, 0.07);
 }
-
+.elevated2 {
+  box-shadow: 0.6px 0.6px 0.7px rgba(0, 0, 0, 0.02), 1.5px 1.5px 1.8px rgba(0, 0, 0, 0.028),
+    2.8px 2.8px 3.4px rgba(0, 0, 0, 0.035), 4.9px 4.9px 6px rgba(0, 0, 0, 0.042), 9.2px 9.2px 11.3px rgba(0, 0, 0, 0.05),
+    22px 22px 27px rgba(0, 0, 0, 0.07);
+}
 .divider {
   height: 12px;
   border: 0;
   box-shadow: inset 0 7px 7px -7px rgba(0, 0, 0, 0.1);
 }
 
-.App {
+.home {
+  flex: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  background: rgb(191, 222, 241);
+  background: linear-gradient(90deg, rgba(191, 222, 241, 1) 24%, rgba(246, 246, 246, 1) 66%);
+}
+
+.dashboard {
   flex: 1;
   min-height: 100vh;
   display: flex;
@@ -56,4 +71,50 @@ html {
     align-items: flex-end;
     justify-content: center;
   }
+}
+/* 
+.ant-modal-footer {
+  padding: 0 !important;
+} */
+
+textarea.ant-input {
+  min-height: 40px !important;
+}
+
+.dots {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #79c7c5;
+  box-shadow: 0px 7px 0px #79c7c5, 0px 14px 0px #79c7c5;
+}
+
+.bubble {
+  /* position: relative;
+  display: inline-block; */
+  /* margin-bottom: 5px;
+  color: #f9fbff;
+  font-size: 0.7em; */
+  padding: 10px 10px 10px 12px;
+  border-radius: 20px;
+}
+
+.rounded {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.gradient {
+  background: rgb(240, 247, 255);
+  background: linear-gradient(90deg, rgba(240, 247, 255, 1) 0%, rgba(229, 239, 250, 1) 40%, rgba(181, 198, 224, 1) 73%);
+}
+
+.gradient2 {
+  background: rgb(240, 247, 255);
+  background: linear-gradient(90deg, rgba(240, 247, 255, 1) 0%, rgba(229, 239, 250, 1) 58%);
+}
+
+.gradient3 {
+  background: rgb(191, 222, 241);
+  background: linear-gradient(90deg, rgba(191, 222, 241, 1) 25%, rgba(246, 246, 246, 1) 79%);
 }

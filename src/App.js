@@ -1,72 +1,44 @@
 import React, { useState } from "react";
 import "antd/dist/antd.min.css";
-import { Row, Col } from "antd";
-import SearchBar from "./components/SearchBar";
-import SearchResults from "./components/SearchResults";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import data from "./data";
-import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import StaffHome from "./staff-side/StaffHome";
+import Home from "./student-side/Home";
+import ConversationList from "./staff-side/ConversationList";
+import QuestionList from "./staff-side/QuestionList";
+import FAQList from "./staff-side/FAQList";
+import Dashboard from "./staff-side/Dashboard";
+import Settings from "./staff-side/Settings";
+import ShowConversation from "./staff-side/components/ShowConversation";
+import ProtectedRoute from "./staff-side/ProtectedRoute";
+import LoginModal from "./student-side/components/LoginModal";
+import UpdateFAQ from "./staff-side/components/UpdateFAQ";
+import ShowFAQ from "./staff-side/components/ShowFAQ";
 
-function App() {
-  const [searchResults, setSearchResults] = useState([]);
-  const [searchMode, setSearchMode] = useState(false);
-
+const App = () => {
+  const [showLogin, setShowLogin] = useState(false);
   return (
-    <div className="App">
-      <Row>
-        <Col span={24}>
-          <Row style={{ backgroundColor: "skyblue", padding: 30, paddingBottom: 50 }}>
-            <Col xs={0} md={4}></Col>
-            <Col xs={24} md={16}>
-              <Header />
-            </Col>
-            <Col xs={0} md={4}></Col>
-          </Row>
-
-          <Row>
-            <Col xs={1} md={4}></Col>
-            <Col xs={22} md={16}>
-              <SearchBar data={data} setSearchResults={setSearchResults} setSearchMode={setSearchMode} />
-
-              {searchMode &&
-                (searchResults.length > 0 ? (
-                  <p style={{ marginLeft: 5, marginTop: 5 }}>
-                    <em>{searchResults.length} results found</em>
-                  </p>
-                ) : (
-                  <p style={{ marginLeft: 5, marginTop: 5 }}>
-                    <em>
-                      0 results found. Click{" "}
-                      <button className="buttonLink" onClick={() => setSearchResults(data)}>
-                        <em>here</em>
-                      </button>{" "}
-                      to view the entire FAQ instead
-                    </em>
-                  </p>
-                ))}
-              <SearchResults results={searchResults} />
-            </Col>
-            <Col xs={1} md={4}></Col>
-          </Row>
-        </Col>
-      </Row>
-      <Row
-        style={{
-          backgroundColor: "#fcfcfc",
-          paddingTop: 40,
-          paddingBottom: 40,
-          marginTop: 50,
-        }}
-      >
-        <Col span={4}></Col>
-        <Col span={16}>
-          <Footer></Footer>
-        </Col>
-        <Col span={4}></Col>
-      </Row>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/staff" element={<ProtectedRoute setShowLogin={setShowLogin} />}>
+          <Route path="/staff" element={<StaffHome />}>
+            <Route path="questions" element={<QuestionList />} />
+            <Route path="questions/conversations/:id" element={<ShowConversation />} />
+            <Route path="faq/conversations/:id" element={<ShowConversation />} />
+            <Route path="faq/update" element={<UpdateFAQ />} />
+            <Route path="faq/add" element={<UpdateFAQ />} />
+            <Route path="faq/:id" element={<ShowFAQ />} />
+            <Route path="faq" element={<FAQList />} />
+            <Route path="conversations" element={<ConversationList />} />
+            <Route path="conversations/:id" element={<ShowConversation />} />
+            <Route path="settings" element={<Settings />} />
+            <Route index element={<Dashboard />} />
+          </Route>
+        </Route>
+        <Route path="/" element={<Home />} />
+      </Routes>
+      <LoginModal showLogin={showLogin} setShowLogin={setShowLogin} />
+    </Router>
   );
-}
+};
 
 export default App;

@@ -1,0 +1,117 @@
+import React, { useEffect, useState } from "react";
+import { PageHeader, Button, Descriptions, List, Badge, Tag, Space, Popconfirm, message } from "antd";
+import { useParams, useNavigate } from "react-router-dom";
+import { api } from "../../api/api";
+
+const ShowConversation = () => {
+  const [convo, setConvo] = useState({});
+  let params = useParams();
+  const navigate = useNavigate();
+  useEffect(() => {
+    let isReady = true;
+    const setup = () => {
+      if (isReady) {
+        fetchConvo();
+      }
+    };
+
+    setup();
+
+    return () => {
+      isReady = false;
+    };
+  }, []);
+
+  const updateConversation = async (conversationId) => {
+    try {
+      const response = await api.put(`/conversation/${conversationId}`);
+      setConvo(response.data);
+    } catch (e) {
+      message.error(e.response.data.error);
+    }
+  };
+
+  const fetchConvo = async () => {
+    try {
+      const response = await api.get(`/conversations/${params.id}`);
+      setConvo(response.data);
+    } catch (e) {
+      message.error(e.response.data.error);
+      if (e.response.status === 403 || e.response.status === 401) {
+        navigate("/");
+      }
+    }
+  };
+  function confirm(e) {
+    e.preventDefault();
+    updateConversation(convo.conversation.id);
+    message.success("Successfully updated conversation");
+  }
+
+  function cancel(e) {
+    message.error("Canceled");
+  }
+
+  if (Object.keys(convo).length <= 0) {
+    return null;
+  }
+  return (
+    <>
+      <PageHeader
+        ghost={false}
+        style={{ backgroundColor: "#e6f7ff", marginBottom: 20 }}
+        onBack={() => window.history.back()}
+        title="Conversation"
+        subTitle={`# ${convo.conversation.id}`}
+        extra={[
+          <Space key="1">
+            <Badge count={convo.queries.filter((q) => !q.resolved).length} />
+            {convo.conversation.contact && (
+              <>
+                <Tag color="success">Contact</Tag>
+                <Popconfirm
+                  placement="bottomRight"
+                  title="This indicates you have contacted the student and handled all their questions"
+                  onConfirm={confirm}
+                  onCancel={cancel}
+                  okText="Continue"
+                  cancelText="Cancel"
+                >
+                  <Button type="primary">Resolve</Button>
+                </Popconfirm>
+              </>
+            )}
+          </Space>,
+        ]}
+      >
+        <Descriptions size="middle" column={2}>
+          <Descriptions.Item label="Name">
+            {convo.conversation.firstname} {convo.conversation.lastname}
+          </Descriptions.Item>
+          <Descriptions.Item label="Email">{convo.conversation.email}</Descriptions.Item>
+          <Descriptions.Item label="Program">{convo.conversation.program}</Descriptions.Item>
+          <Descriptions.Item label="Date">{convo.conversation.date}</Descriptions.Item>
+        </Descriptions>
+      </PageHeader>
+
+      <List
+        itemLayout="horizontal"
+        dataSource={convo.queries}
+        size="large"
+        renderItem={(item) => {
+          let color = item.resolved ? "#b7eb8f" : "#ff7875";
+          return (
+            <List.Item
+              className="elevated2"
+              style={{ backgroundColor: "white", margin: 20, borderRight: `15px solid ${color}` }}
+            >
+              <List.Item.Meta title={`Q: ${item.question}`} description={`A: ${item.response}`} />
+            </List.Item>
+          );
+        }}
+      />
+    </>
+  );
+};
+
+export default ShowConversation;
