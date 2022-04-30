@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Form, Select, Button, Input, message } from "antd";
-import axios from "axios";
+import { api } from "../../api/api";
 
 const NORMAL_STATE = "normal";
 const CHECK_RESPONSE_STATE = "check";
@@ -61,7 +61,7 @@ const Chatbot = () => {
   const fetchResponse = async (question) => {
     try {
       const conversation_id = conversationDetails.id;
-      const botResponse = await axios.post(`http://127.0.0.1:5000/chat/answer`, {
+      const botResponse = await api.post("/chat/answer", {
         question,
         conversation_id,
       });
@@ -84,7 +84,7 @@ const Chatbot = () => {
 
   const onFinish = async (values) => {
     try {
-      const response = await axios.post("http://127.0.0.1:5000/chat/start", values);
+      const response = await api.post("/chat/start", values);
       const { conversation } = response.data;
       setConversationDetails(conversation);
       setConvo([
@@ -105,7 +105,7 @@ const Chatbot = () => {
       const conversation_id = conversationDetails.id;
       const query_id = queries[queries.length - 1];
 
-      const response = await axios.put(`http://127.0.0.1:5000/chat/resolve`, { conversation_id, query_id });
+      const response = await api.put("chat/resolve", { conversation_id, query_id });
       const { query } = response.data;
       setQueries([...queries, query.id]);
     } catch (e) {
@@ -116,7 +116,7 @@ const Chatbot = () => {
   const contactStudent = async () => {
     try {
       const conversation_id = conversationDetails.id;
-      const response = await axios.put(`http://127.0.0.1:5000/chat/contact`, { conversation_id });
+      const response = await api.put("/chat/contact", { conversation_id });
       const { conversation } = response.data;
       setConversationDetails(conversation);
     } catch (e) {
