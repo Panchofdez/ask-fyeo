@@ -44,6 +44,9 @@ const Settings = () => {
       message.success("Successfully removed staff member");
     } catch (e) {
       message.error(e.response.data.error);
+      if (e.response.status === 403 || e.response.status === 401) {
+        navigate("/");
+      }
     }
   };
 
@@ -55,6 +58,9 @@ const Settings = () => {
       message.success("Successfully added staff member");
     } catch (e) {
       message.error(e.response.data.error);
+      if (e.response.status === 403 || e.response.status === 401) {
+        navigate("/");
+      }
     }
   };
 

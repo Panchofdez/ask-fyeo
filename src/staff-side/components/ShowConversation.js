@@ -28,6 +28,9 @@ const ShowConversation = () => {
       setConvo(response.data);
     } catch (e) {
       message.error(e.response.data.error);
+      if (e.response.status === 403 || e.response.status === 401) {
+        navigate("/");
+      }
     }
   };
 

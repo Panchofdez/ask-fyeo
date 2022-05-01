@@ -28,6 +28,9 @@ const UpdateFAQ = () => {
       message.success("Successfully saved changes");
     } catch (e) {
       message.error(e.response.data.error);
+      if (e.response.status === 403 || e.response.status === 401) {
+        navigate("/");
+      }
     }
   };
 
@@ -43,6 +46,9 @@ const UpdateFAQ = () => {
       navigate("/staff/faq");
     } catch (e) {
       message.error(e.response.data.error);
+      if (e.response.status === 403 || e.response.status === 401) {
+        navigate("/");
+      }
     }
   };
   const deleteFAQ = async () => {
@@ -53,6 +59,9 @@ const UpdateFAQ = () => {
       navigate("/staff/faq");
     } catch (e) {
       message.error(e.response.data.error);
+      if (e.response.status === 403 || e.response.status === 401) {
+        navigate("/");
+      }
     }
   };
 

@@ -113,9 +113,11 @@ const FAQList = () => {
               title={item.tag}
               extra={
                 <Space>
-                  <Button onClick={() => navigate("/staff/faq/update", { state: { faq: item, mode: "update" } })}>
-                    Update
-                  </Button>
+                  {item.tag !== "Other" && (
+                    <Button onClick={() => navigate("/staff/faq/update", { state: { faq: item, mode: "update" } })}>
+                      Update
+                    </Button>
+                  )}
                   <Button onClick={() => navigate(`/staff/faq/${item.id}`, { state: { faq: item } })}>
                     View Details
                   </Button>
@@ -147,19 +149,22 @@ const FAQList = () => {
                 />,
               ]}
             >
-              <Card.Meta
-                style={{ marginBottom: 10 }}
-                title={
-                  <p style={{ fontSize: 14, fontWeight: "normal" }}>{`Last Updated: ${
-                    item.last_updated ? item.last_updated.split(" ").slice(0, 4).join(" ") : ""
-                  }`}</p>
-                }
-                description={item.patterns.map((p, i) => (
-                  <Tag key={i} color="cyan" style={{ marginBottom: 5 }}>
-                    {p}
-                  </Tag>
-                ))}
-              />
+              {item.tag !== "Other" && (
+                <Card.Meta
+                  style={{ marginBottom: 10 }}
+                  title={
+                    <p style={{ fontSize: 14, fontWeight: "normal" }}>{`Last Updated: ${
+                      item.last_updated ? item.last_updated.split(" ").slice(0, 4).join(" ") : ""
+                    }`}</p>
+                  }
+                  description={item.patterns.map((p, i) => (
+                    <Tag key={i} color="cyan" style={{ marginBottom: 5 }}>
+                      {p}
+                    </Tag>
+                  ))}
+                />
+              )}
+
               {item.responses.map((r, i) => (
                 <Card key={i} type="inner" style={{ wordWrap: "break-word" }}>
                   {r}
