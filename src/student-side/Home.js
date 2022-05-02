@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Row, Col } from "antd";
 import Header from "./components/Header";
 import Chatbot from "./components/Chatbot";
 import "../App.css";
-
+import { api } from "../api/api";
 const Home = () => {
+  useEffect(() => {
+    const pingAPI = () => {
+      api.get("/");
+    };
+    pingAPI();
+  }, []);
   return (
     <div className="home">
       <Row
