@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Card, Form, Select, Button, Input, message } from "antd";
+import { Card, Form, Select, Button, Input, message, Space } from "antd";
 import { api } from "../../api/api";
-
+import Mascot from "./Mascot";
 const NORMAL_STATE = "normal";
 const CHECK_RESPONSE_STATE = "check";
 const CONTACT_STATE = "contact";
@@ -13,6 +13,7 @@ const Chatbot = () => {
   const [showForm, setShowForm] = useState(true);
   const [convo, setConvo] = useState([]);
   const [value, setValue] = useState("");
+  const [mascotType, setMascotType] = useState(0);
 
   const displayConvo = () => {
     return convo.map((r, i) => {
@@ -76,6 +77,7 @@ const Chatbot = () => {
 
       //Update the queries object
       setQueries([...queries, id]);
+      setMascotType(3);
       setChatState(CHECK_RESPONSE_STATE);
     } catch (e) {
       message.error(e.response.data.error);
@@ -86,6 +88,7 @@ const Chatbot = () => {
     try {
       const response = await api.post("/chat/start", values);
       const { conversation } = response.data;
+
       setConversationDetails(conversation);
       setConvo([
         ...convo,
@@ -94,6 +97,7 @@ const Chatbot = () => {
           response: `Hello ${values.firstname} it's nice to meet you! I am the FYEO chatbot and I'm here to answer any of your questions about your first year of engineering. Ask me your question!`,
         },
       ]);
+      setMascotType(2);
       setShowForm(false);
     } catch (e) {
       message.error(e.response.data.error);
@@ -118,12 +122,14 @@ const Chatbot = () => {
       const conversation_id = conversationDetails.id;
       const response = await api.put("/chat/contact", { conversation_id });
       const { conversation } = response.data;
+
       setConversationDetails(conversation);
     } catch (e) {
       message.error(e.response.data.error);
     }
   };
 
+  console.log(mascotType);
   if (!showForm) {
     return (
       <Card
@@ -144,6 +150,7 @@ const Chatbot = () => {
                         { user: "bot", response: "Great! ask me another question" },
                       ]);
                       setChatState(NORMAL_STATE);
+                      setMascotType(0);
                     } else {
                       contactStudent();
                       setConvo([
@@ -156,6 +163,7 @@ const Chatbot = () => {
                         { user: "bot", response: "Ask me another question!" },
                       ]);
                       setChatState(NORMAL_STATE);
+                      setMascotType(2);
                     }
                   }}
                 >
@@ -178,6 +186,7 @@ const Chatbot = () => {
                         },
                       ]);
                       setChatState(CONTACT_STATE);
+                      setMascotType(1);
                     } else {
                       setConvo([
                         ...convo,
@@ -185,6 +194,7 @@ const Chatbot = () => {
                         { user: "bot", response: "Ok then! Ask me another question if you have more" },
                       ]);
                       setChatState(NORMAL_STATE);
+                      setMascotType(2);
                     }
                   }}
                 >
@@ -206,12 +216,19 @@ const Chatbot = () => {
               ]
         }
       >
+        <Mascot type={mascotType} />
         <div style={{ display: "flex", flexDirection: "column" }}>{displayConvo()}</div>
       </Card>
     );
   } else {
     return (
-      <Card title="Talk to our chatbot" className="elevated rounded" bodyStyle={{ minHeight: "70vh" }} footer={null}>
+      <Card
+        title="Talk to our chatbot"
+        className="elevated rounded"
+        bodyStyle={{ minHeight: "70vh" }}
+        footer={null}
+        extra={<Mascot type={mascotType} />}
+      >
         <div style={{ display: "flex", flexDirection: "column" }}>
           <Form
             name="basic"

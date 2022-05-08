@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Image, Space, Tooltip } from "antd";
 import Logo from "../../images/logo.png";
-import Ryerson from "../../images/Ryerson.png";
+import TMU from "../../images/TMU.png";
 import {
   InstagramOutlined,
   LoginOutlined,
@@ -37,7 +37,7 @@ const Header = () => {
           >
             <Space size={width >= 768 ? "large" : "small"} direction={width >= 768 ? "horizontal" : "vertical"}>
               <Image width={200} src={Logo} preview={false} />
-              <Image width={200} src={Ryerson} preview={false} />
+              <Image width={200} src={TMU} preview={false} />
             </Space>
           </Col>
         </Row>
