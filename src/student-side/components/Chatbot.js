@@ -6,6 +6,9 @@ const NORMAL_STATE = "normal";
 const CHECK_RESPONSE_STATE = "check";
 const CONTACT_STATE = "contact";
 
+// Import DOMPurify
+const DOMPurify = require("dompurify")(window);
+
 const Chatbot = () => {
   const [chatState, setChatState] = useState(NORMAL_STATE);
   const [conversationDetails, setConversationDetails] = useState({});
@@ -31,9 +34,8 @@ const Chatbot = () => {
                 wordWrap: "break-word",
               }}
               className="elevated"
-            >
-              {r.response}
-            </div>
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(r.response) }}
+            ></div>
           </div>
         );
       } else {
@@ -129,7 +131,6 @@ const Chatbot = () => {
     }
   };
 
-  console.log(mascotType);
   if (!showForm) {
     return (
       <Card

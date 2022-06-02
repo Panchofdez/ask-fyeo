@@ -3,6 +3,8 @@ import { List, PageHeader, Tag, Card, Button, Space, Statistic, Row, Col, Input,
 import { api } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { InfoCircleOutlined } from "@ant-design/icons";
+// Import DOMPurify
+const DOMPurify = require("dompurify")(window);
 
 const FAQList = () => {
   const [faq, setFaq] = useState([]);
@@ -40,6 +42,7 @@ const FAQList = () => {
     }
     return faq;
   };
+
   return (
     <>
       <PageHeader
@@ -167,7 +170,7 @@ const FAQList = () => {
 
               {item.responses.map((r, i) => (
                 <Card key={i} type="inner" style={{ wordWrap: "break-word" }}>
-                  {r}
+                  <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(r) }} />
                 </Card>
               ))}
             </Card>

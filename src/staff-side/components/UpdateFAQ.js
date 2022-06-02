@@ -3,9 +3,13 @@ import { List, PageHeader, Tag, Card, Button, message, Row, Col, Input, Popconfi
 import { useLocation, useNavigate } from "react-router-dom";
 import { api } from "../../api/api";
 import { InfoCircleOutlined } from "@ant-design/icons";
+// Import DOMPurify
+const DOMPurify = require("dompurify")(window);
 
 const UpdateFAQ = () => {
   const [currFAQ, setCurrFAQ] = useState({});
+  const [textarea, setTextarea] = useState("");
+  const [viewMode, setViewMode] = useState(false);
   const { state } = useLocation();
   const navigate = useNavigate();
   const { faq, mode } = state;
@@ -91,6 +95,7 @@ const UpdateFAQ = () => {
   if (Object.keys(currFAQ).length === 0) {
     return null;
   }
+
   return (
     <>
       <PageHeader
@@ -266,18 +271,40 @@ const UpdateFAQ = () => {
                   </Space>
                 </div>
               }
-              footer={
-                <Input.TextArea
-                  // className="elevated"
-                  rows={4}
-                  allowClear
-                  placeholder="Add a valid response and press enter"
-                  onPressEnter={(e) => {
-                    e.preventDefault();
-                    addResponse(e.target.value);
-                  }}
-                />
-              }
+              footer={[
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  {viewMode ? (
+                    <Card type="inner" style={{ wordWrap: "break-word" }}>
+                      <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(textarea) }} />
+                    </Card>
+                  ) : (
+                    <Input.TextArea
+                      // className="elevated"
+                      rows={8}
+                      style={{ width: "100%" }}
+                      allowClear
+                      placeholder="Add a valid response"
+                      value={textarea}
+                      onChange={(e) => setTextarea(e.target.value)}
+                    />
+                  )}
+
+                  <Space>
+                    <Button style={{ marginTop: 10 }} onClick={() => addResponse(textarea)}>
+                      Add Response
+                    </Button>
+                    {viewMode ? (
+                      <Button style={{ marginTop: 10 }} onClick={() => setViewMode(false)}>
+                        Edit
+                      </Button>
+                    ) : (
+                      <Button style={{ marginTop: 10 }} onClick={() => setViewMode(true)}>
+                        View
+                      </Button>
+                    )}
+                  </Space>
+                </div>,
+              ]}
               style={{ backgroundColor: "white", marginBottom: 20 }}
               itemLayout="vertical"
               size="large"
@@ -292,7 +319,7 @@ const UpdateFAQ = () => {
                     </Button>
                   }
                 >
-                  <List.Item.Meta description={item} />
+                  {item}
                 </List.Item>
               )}
             />

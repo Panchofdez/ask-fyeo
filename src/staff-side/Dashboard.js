@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Statistic, Card, PageHeader, Divider, message } from "antd";
-import { api } from "../api/api";
+import { api, setTokenHeader } from "../api/api";
 import DateSetter from "./components/DateSetter";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Label } from "recharts";
 import { useNavigate } from "react-router-dom";
@@ -31,6 +31,10 @@ const Dashboard = () => {
       message.error(e.response.data.error);
       if (e.response.status === 403 || e.response.status === 401) {
         navigate("/");
+        setTokenHeader();
+        if (localStorage.getItem("token")) {
+          localStorage.removeItem("token");
+        }
       }
     }
   };
@@ -43,6 +47,10 @@ const Dashboard = () => {
       message.error(e.response.data.error);
       if (e.response.status === 403 || e.response.status === 401) {
         navigate("/");
+        setTokenHeader();
+        if (localStorage.getItem("token")) {
+          localStorage.removeItem("token");
+        }
       }
     }
   };
