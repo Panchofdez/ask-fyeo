@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const url = "https://fyeo-chatbot.herokuapp.com";
+//const url = "https://fyeo-chatbot.herokuapp.com";
+
+const url = "https://fyeo-chatbot.onrender.com";
 
 // const url = "http://localhost:80";
 
