@@ -68,6 +68,7 @@ const ShowConversation = () => {
         subTitle={`# ${convo.conversation.id}`}
         extra={[
           <Space key="1">
+            <Badge count={convo.queries.filter((q) => q.resolved).length} style={{ backgroundColor: "#52c41a" }} />
             <Badge count={convo.queries.filter((q) => !q.resolved).length} />
             {convo.conversation.contact && (
               <>

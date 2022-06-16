@@ -38,7 +38,11 @@ const FAQList = () => {
 
   const filterFAQ = (faq, searchVal) => {
     if (faq.length > 0) {
-      return faq.filter((f) => f.tag.toLowerCase().indexOf(searchVal.toLowerCase()) !== -1);
+      return faq.filter(
+        (f) =>
+          f.tag.toLowerCase().indexOf(searchVal.toLowerCase()) !== -1 ||
+          f.patterns.join(" ").toLowerCase().indexOf(searchVal.toLowerCase()) !== -1
+      );
     }
     return faq;
   };

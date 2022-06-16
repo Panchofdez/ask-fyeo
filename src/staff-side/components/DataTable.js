@@ -147,15 +147,24 @@ const DataTable = ({ data, type }) => {
       onFilter: (value, record) => record.contact === value,
     },
     {
-      title: "Unresolved",
+      title: "Correct",
+      key: "resolved",
+      dataIndex: "resolved",
+      render: (unresolved) =>
+        unresolved > 0 && <Badge showZero count={unresolved} style={{ backgroundColor: "#52c41a" }} />,
+      filters: [
+        {
+          text: "greater than 0",
+          value: 0,
+        },
+      ],
+      onFilter: (value, record) => record.unresolved > value,
+    },
+    {
+      title: "Inaccurate",
       key: "unresolved",
       dataIndex: "unresolved",
-      render: (unresolved) =>
-        unresolved === 0 ? (
-          <Badge showZero count={unresolved} style={{ backgroundColor: "#52c41a" }} />
-        ) : (
-          <Badge showZero count={unresolved} />
-        ),
+      render: (unresolved) => unresolved !== 0 && <Badge showZero count={unresolved} />,
       filters: [
         {
           text: "greater than 0",

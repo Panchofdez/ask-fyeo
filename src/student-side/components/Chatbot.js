@@ -16,7 +16,7 @@ const Chatbot = () => {
   const [showForm, setShowForm] = useState(true);
   const [convo, setConvo] = useState([]);
   const [value, setValue] = useState("");
-  const [mascotType, setMascotType] = useState(0);
+  const [mascotType, setMascotType] = useState(1);
 
   const displayConvo = () => {
     return convo.map((r, i) => {
