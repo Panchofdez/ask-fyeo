@@ -150,15 +150,18 @@ const DataTable = ({ data, type }) => {
       title: "Correct",
       key: "resolved",
       dataIndex: "resolved",
-      render: (unresolved) =>
-        unresolved > 0 && <Badge showZero count={unresolved} style={{ backgroundColor: "#52c41a" }} />,
+      render: (resolved) => resolved > 0 && <Badge showZero count={resolved} style={{ backgroundColor: "#52c41a" }} />,
       filters: [
         {
           text: "greater than 0",
           value: 0,
         },
+        {
+          text: "greater than 5",
+          value: 5,
+        },
       ],
-      onFilter: (value, record) => record.unresolved > value,
+      onFilter: (value, record) => record.resolved > value,
     },
     {
       title: "Inaccurate",
@@ -169,6 +172,10 @@ const DataTable = ({ data, type }) => {
         {
           text: "greater than 0",
           value: 0,
+        },
+        {
+          text: "greater than 5",
+          value: 5,
         },
       ],
       onFilter: (value, record) => record.unresolved > value,
