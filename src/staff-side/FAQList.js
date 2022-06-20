@@ -15,6 +15,9 @@ const FAQList = () => {
     const setUp = () => {
       if (isReady) {
         getFAQ();
+        if (sessionStorage.getItem("searchValue")) {
+          setSearchValue(sessionStorage.getItem("searchValue"));
+        }
       }
     };
     setUp();
@@ -82,9 +85,10 @@ const FAQList = () => {
         extra={[
           <Button
             key={1}
-            onClick={() =>
-              navigate("/staff/faq/update", { state: { faq: { tag: "", patterns: [], responses: [] }, mode: "add" } })
-            }
+            onClick={() => {
+              sessionStorage.setItem("searchValue", searchValue);
+              navigate("/staff/faq/update", { state: { faq: { tag: "", patterns: [], responses: [] }, mode: "add" } });
+            }}
           >
             Add To FAQ
           </Button>,
@@ -121,11 +125,21 @@ const FAQList = () => {
               extra={
                 <Space>
                   {item.tag !== "Other" && (
-                    <Button onClick={() => navigate("/staff/faq/update", { state: { faq: item, mode: "update" } })}>
+                    <Button
+                      onClick={() => {
+                        sessionStorage.setItem("searchValue", searchValue);
+                        navigate("/staff/faq/update", { state: { faq: item, mode: "update" } });
+                      }}
+                    >
                       Update
                     </Button>
                   )}
-                  <Button onClick={() => navigate(`/staff/faq/${item.id}`, { state: { faq: item } })}>
+                  <Button
+                    onClick={() => {
+                      sessionStorage.setItem("searchValue", searchValue);
+                      navigate(`/staff/faq/${item.id}`, { state: { faq: item } });
+                    }}
+                  >
                     View Details
                   </Button>
                 </Space>
