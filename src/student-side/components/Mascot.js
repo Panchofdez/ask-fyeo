@@ -4,6 +4,8 @@ import ChatbotRingEyesClosed from "../../images/ChatbotRing3-eyesclosed-removebg
 import ChatbotRingMouthOpen from "../../images/ChatbotRing3-mouthopen-removebg.jpg";
 import ChatbotRingMouthOpenEyesClosed from "../../images/ChatbotRing3-mouthopeneyesclosed-removebg.png";
 import ChatbotRingEyebrowsRaised from "../../images/ChatbotRing3-eyebrowsraised-removebg.png";
+import ChatbotMain from "../../images/ChatbotMain.png";
+
 const Mascot = ({ type }) => {
   const getMascotType = (type) => {
     if (type === 0) {
@@ -12,11 +14,17 @@ const Mascot = ({ type }) => {
       return ChatbotRingMouthOpen;
     } else if (type === 2) {
       return ChatbotRingMouthOpenEyesClosed;
-    } else {
+    } else if (type === 3) {
       return ChatbotRingEyebrowsRaised;
+    } else {
+      return ChatbotMain;
     }
   };
-  return <Image width={50} src={getMascotType(type)} preview={false} />;
+  if (type > 3) {
+    return <Image width={100} src={getMascotType(type)} preview={false} />;
+  } else {
+    return <Image width={60} src={getMascotType(type)} preview={false} />;
+  }
 };
 
 export default Mascot;
