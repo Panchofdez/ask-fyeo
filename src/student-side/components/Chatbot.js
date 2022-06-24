@@ -96,7 +96,7 @@ const Chatbot = () => {
         ...convo,
         {
           user: "bot",
-          response: `Hello ${values.firstname} it's nice to meet you! I am the FYEO chatbot and I'm here to answer any of your questions about your first year of engineering. Ask me your question!`,
+          response: `Hello ${values.firstname}, it's nice to meet you! I am the FYEO chatbot and I'm here to answer any of your questions about your first year of engineering. Ask me your question!`,
         },
       ]);
       setMascotType(2);
@@ -148,7 +148,7 @@ const Chatbot = () => {
                       setConvo([
                         ...convo,
                         { user: "123", response: "Yes" },
-                        { user: "bot", response: "Great! ask me another question" },
+                        { user: "bot", response: "Great! Do you have any other questions?" },
                       ]);
                       setChatState(NORMAL_STATE);
                       setMascotType(0);
@@ -159,7 +159,8 @@ const Chatbot = () => {
                         { user: "123", response: "Yes" },
                         {
                           user: "bot",
-                          response: "Great one of our FYEO staff members will contact you in the upcoming days.",
+                          response:
+                            "Ok! One of our FYEO team members will contact you in the next 2-3 working days. You can also drop by the FYEO in ENG 340A Monday to Friday from 9 am to 5 pm.",
                         },
                         { user: "bot", response: "Ask me another question!" },
                       ]);
@@ -179,11 +180,11 @@ const Chatbot = () => {
                         {
                           user: "bot",
                           response:
-                            "If we are unable to answer your question you can either ask your question again or send an email to firstyeareng@ryerson.ca or one of our FYEO staff can reach out to you",
+                            "I'm sorry that I was not able to answer your question. Please send your question to firstyeareng@ryerson.ca and one of our team members will be able to assist you. ",
                         },
                         {
                           user: "bot",
-                          response: "Do you prefer to be contacted by a staff member instead?",
+                          response: "Would you prefer to be contacted by a staff member instead?",
                         },
                       ]);
                       setChatState(CONTACT_STATE);
@@ -224,7 +225,7 @@ const Chatbot = () => {
   } else {
     return (
       <Card
-        title="Talk to our chatbot"
+        title="Hello, ask me a question!"
         className="elevated rounded"
         bodyStyle={{ minHeight: "70vh" }}
         footer={null}
@@ -269,9 +270,9 @@ const Chatbot = () => {
               </Select>
             </Form.Item>
             <Form.Item
-              label="Email"
+              label="TMU Email"
               name="email"
-              rules={[{ required: true, message: "Please input your Ryerson email" }]}
+              rules={[{ required: true, message: "Please input your official school email" }]}
             >
               <Input />
             </Form.Item>

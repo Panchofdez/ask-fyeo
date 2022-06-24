@@ -52,9 +52,9 @@ const LoginModal = ({ showLogin, setShowLogin }) => {
           autoComplete="off"
         >
           <Form.Item
-            label="Email"
+            label="TMU Email"
             name="email"
-            rules={[{ required: true, message: "Please input your Ryerson email" }]}
+            rules={[{ required: true, message: "Please input your official school email" }]}
           >
             <Input />
           </Form.Item>
