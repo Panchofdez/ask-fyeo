@@ -5,6 +5,7 @@ import Mascot from "./Mascot";
 const NORMAL_STATE = "normal";
 const CHECK_RESPONSE_STATE = "check";
 const CONTACT_STATE = "contact";
+const WAITING_STATE = "wait";
 
 // Import DOMPurify
 const DOMPurify = require("dompurify")(window);
@@ -61,8 +62,14 @@ const Chatbot = () => {
     });
   };
 
-  const fetchResponse = async (question) => {
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  const fetchResponse = async (question, convoState) => {
+    convoState = [...convoState, { user: "123", response: question }];
+    setConvo(convoState);
     try {
+      setChatState(WAITING_STATE);
+      await sleep(3000);
       const conversation_id = conversationDetails.id;
       const botResponse = await api.post("/chat/answer", {
         question,
@@ -70,12 +77,12 @@ const Chatbot = () => {
       });
       const { query } = botResponse.data;
       const { id, response } = query;
-      setConvo([
-        ...convo,
-        { user: "123", response: question },
+      convoState = [
+        ...convoState,
         { user: "bot", response },
         { user: "bot", response: "Was I able to answer your question?" },
-      ]);
+      ];
+      setConvo(convoState);
 
       //Update the queries object
       setQueries([...queries, id]);
@@ -83,6 +90,14 @@ const Chatbot = () => {
       setChatState(CHECK_RESPONSE_STATE);
     } catch (e) {
       message.error(e.response.data.error);
+      setConvo([
+        ...convoState,
+        {
+          user: "bot",
+          response: "I'm sorry there seems to be an error please try again",
+        },
+      ]);
+      setChatState(NORMAL_STATE);
     }
   };
 
@@ -106,29 +121,101 @@ const Chatbot = () => {
     }
   };
 
-  const resolveQuery = async () => {
+  const resolveQuery = async (convoState) => {
+    convoState = [...convoState, { user: "123", response: "Yes" }];
+    setConvo(convoState);
     try {
+      setChatState(WAITING_STATE);
+      await sleep(1000);
       const conversation_id = conversationDetails.id;
       const query_id = queries[queries.length - 1];
-
       const response = await api.put("chat/resolve", { conversation_id, query_id });
       const { query } = response.data;
       setQueries([...queries, query.id]);
+      convoState = [...convoState, { user: "bot", response: "Great! Do you have any other questions?" }];
+      setConvo(convoState);
+      setChatState(NORMAL_STATE);
+      setMascotType(0);
     } catch (e) {
       message.error(e.response.data.error);
+      setConvo([
+        ...convoState,
+        {
+          user: "bot",
+          response: "I'm sorry there seems to be an error please try again",
+        },
+      ]);
+      setChatState(CHECK_RESPONSE_STATE);
     }
   };
 
-  const contactStudent = async () => {
+  const contactStudent = async (convoState) => {
+    convoState = [...convoState, { user: "123", response: "Yes" }];
+    setConvo(convoState);
     try {
+      setChatState(WAITING_STATE);
+      await sleep(1000);
       const conversation_id = conversationDetails.id;
       const response = await api.put("/chat/contact", { conversation_id });
       const { conversation } = response.data;
-
       setConversationDetails(conversation);
+      convoState = [
+        ...convoState,
+        {
+          user: "bot",
+          response:
+            "Ok! One of our FYEO team members will contact you in the next 2-3 working days. You can also drop by the FYEO in ENG 340A Monday to Friday from 9 am to 5 pm.",
+        },
+        { user: "bot", response: "Ask me another question!" },
+      ];
+      setConvo(convoState);
+      setChatState(NORMAL_STATE);
+      setMascotType(2);
     } catch (e) {
       message.error(e.response.data.error);
+      setConvo([
+        ...convoState,
+        {
+          user: "bot",
+          response: "I'm sorry there seems to be an error please try again",
+        },
+      ]);
+      setChatState(CONTACT_STATE);
     }
+  };
+
+  const inaccurateResponse = async (convoState) => {
+    convoState = [...convoState, { user: "123", response: "No" }];
+    setConvo(convoState);
+    setChatState(WAITING_STATE);
+    await sleep(1000);
+
+    convoState = [
+      ...convoState,
+      {
+        user: "bot",
+        response:
+          "I'm sorry that I was not able to answer your question. Please send your question to firstyeareng@ryerson.ca and one of our team members will be able to assist you. ",
+      },
+      {
+        user: "bot",
+        response: "Would you prefer to be contacted by a staff member instead?",
+      },
+    ];
+    setConvo(convoState);
+    setChatState(CONTACT_STATE);
+    setMascotType(1);
+  };
+
+  const denyContact = async (convoState) => {
+    convoState = [...convoState, { user: "123", response: "No" }];
+    setConvo(convoState);
+    setChatState(WAITING_STATE);
+    await sleep(1000);
+    convoState = [...convoState, { user: "bot", response: "Ok then! Ask me another question if you have more" }];
+    setConvo(convoState);
+    setChatState(NORMAL_STATE);
+    setMascotType(2);
   };
 
   if (!showForm) {
@@ -139,70 +226,33 @@ const Chatbot = () => {
         bodyStyle={{ height: "70vh", overflowY: "auto", display: "flex", flexDirection: "column-reverse" }}
         actions={
           chatState !== NORMAL_STATE
-            ? [
-                <Button
-                  type="primary"
-                  onClick={() => {
-                    if (chatState === CHECK_RESPONSE_STATE) {
-                      resolveQuery();
-                      setConvo([
-                        ...convo,
-                        { user: "123", response: "Yes" },
-                        { user: "bot", response: "Great! Do you have any other questions?" },
-                      ]);
-                      setChatState(NORMAL_STATE);
-                      setMascotType(0);
-                    } else {
-                      contactStudent();
-                      setConvo([
-                        ...convo,
-                        { user: "123", response: "Yes" },
-                        {
-                          user: "bot",
-                          response:
-                            "Ok! One of our FYEO team members will contact you in the next 2-3 working days. You can also drop by the FYEO in ENG 340A Monday to Friday from 9 am to 5 pm.",
-                        },
-                        { user: "bot", response: "Ask me another question!" },
-                      ]);
-                      setChatState(NORMAL_STATE);
-                      setMascotType(2);
-                    }
-                  }}
-                >
-                  Yes
-                </Button>,
-                <Button
-                  onClick={() => {
-                    if (chatState === CHECK_RESPONSE_STATE) {
-                      setConvo([
-                        ...convo,
-                        { user: "123", response: "No" },
-                        {
-                          user: "bot",
-                          response:
-                            "I'm sorry that I was not able to answer your question. Please send your question to firstyeareng@ryerson.ca and one of our team members will be able to assist you. ",
-                        },
-                        {
-                          user: "bot",
-                          response: "Would you prefer to be contacted by a staff member instead?",
-                        },
-                      ]);
-                      setChatState(CONTACT_STATE);
-                      setMascotType(1);
-                    } else {
-                      setConvo([
-                        ...convo,
-                        { user: "123", response: "No" },
-                        { user: "bot", response: "Ok then! Ask me another question if you have more" },
-                      ]);
-                      setChatState(NORMAL_STATE);
-                      setMascotType(2);
-                    }
-                  }}
-                >
-                  No
-                </Button>,
-              ]
+            ? chatState !== WAITING_STATE
+              ? [
+                  <Button
+                    type="primary"
+                    onClick={() => {
+                      if (chatState === CHECK_RESPONSE_STATE) {
+                        resolveQuery(convo);
+                      } else {
+                        contactStudent(convo);
+                      }
+                    }}
+                  >
+                    Yes
+                  </Button>,
+                  <Button
+                    onClick={() => {
+                      if (chatState === CHECK_RESPONSE_STATE) {
+                        inaccurateResponse(convo);
+                      } else {
+                        denyContact(convo);
+                      }
+                    }}
+                  >
+                    No
+                  </Button>,
+                ]
+              : []
             : [
                 <Input
                   style={{ flex: 1, height: 40, borderWidth: 0 }}
@@ -211,7 +261,7 @@ const Chatbot = () => {
                   onChange={(e) => setValue(e.target.value)}
                   bordered={false}
                   onPressEnter={(e) => {
-                    fetchResponse(value);
+                    fetchResponse(value, convo);
                     setValue("");
                   }}
                 />,
@@ -219,6 +269,20 @@ const Chatbot = () => {
         }
       >
         <Mascot type={mascotType} />
+        {chatState === WAITING_STATE && (
+          <div
+            style={{
+              float: "left",
+              padding: 10,
+              backgroundColor: "transparent",
+              maxWidth: "60%",
+              marginBottom: 10,
+              paddingLeft: 20,
+            }}
+          >
+            <div className="dot-pulse"></div>
+          </div>
+        )}
         <div style={{ display: "flex", flexDirection: "column" }}>{displayConvo()}</div>
       </Card>
     );
@@ -279,7 +343,7 @@ const Chatbot = () => {
 
             <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
               <Button type="primary" htmlType="submit">
-                Submit
+                Ask your question
               </Button>
             </Form.Item>
           </Form>

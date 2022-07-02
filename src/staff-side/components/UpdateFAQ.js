@@ -244,7 +244,7 @@ const UpdateFAQ = () => {
                     </Button>
                   }
                 >
-                  <List.Item.Meta description={item} />
+                  {item}
                 </List.Item>
               )}
             />

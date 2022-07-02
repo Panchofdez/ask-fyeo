@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { List, PageHeader, Tag, Card, Button, Space, Statistic, Row, Col, Input, Popover, message } from "antd";
+import { List, PageHeader, Tag, Card, Button, Space, Statistic, Row, Col, Input, Popover, message, Select } from "antd";
 import { api } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { InfoCircleOutlined } from "@ant-design/icons";
 // Import DOMPurify
 const DOMPurify = require("dompurify")(window);
 
+const { Option } = Select;
+const ALPHABETICAL = 0;
+const ALPHABETICAL_DESC = 1;
+const DESCENDING = 2;
+const ASCENDING = 3;
+
 const FAQList = () => {
   const [faq, setFaq] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [sortState, setSortState] = useState(ALPHABETICAL);
   const navigate = useNavigate();
   useEffect(() => {
     let isReady = true;
@@ -49,6 +56,57 @@ const FAQList = () => {
     }
     return faq;
   };
+
+  const sortFAQ = (faq, state) => {
+    if (state === ASCENDING) {
+      faq.sort((a, b) => {
+        if (new Date(a.last_updated) < new Date(b.last_updated)) {
+          return -1;
+        } else if (new Date(a.last_updated) > new Date(b.last_updated)) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+    } else if (state === DESCENDING) {
+      faq.sort((a, b) => {
+        if (new Date(a.last_updated) < new Date(b.last_updated)) {
+          return 1;
+        } else if (new Date(a.last_updated) > new Date(b.last_updated)) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+    } else if (state === ALPHABETICAL_DESC) {
+      faq.sort((a, b) => {
+        if (a.tag.toLowerCase() < b.tag.toLowerCase()) {
+          return 1;
+        } else if (a.tag.toLowerCase() > b.tag.toLowerCase()) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+    }
+    return faq;
+  };
+
+  const sorter = (
+    <Select
+      defaultValue={ALPHABETICAL}
+      className="select-after"
+      onSelect={(value) => {
+        console.log(value);
+        setSortState(value);
+      }}
+    >
+      <Option value={ALPHABETICAL}>Alphabetical Order (A-Z)</Option>
+      <Option value={ALPHABETICAL_DESC}>Alphabetical Order (Z-A)</Option>
+      <Option value={DESCENDING}>Most Recently Updated</Option>
+      <Option value={ASCENDING}>Less Recently Updated</Option>
+    </Select>
+  );
 
   return (
     <>
@@ -100,7 +158,7 @@ const FAQList = () => {
           </Space>
         </Row>
         <Row>
-          <Col xs={24} md={12}>
+          <Col xs={24} md={16}>
             <Input
               size="large"
               value={searchValue}
@@ -108,15 +166,16 @@ const FAQList = () => {
               placeholder="Search"
               className="elevated"
               style={{ borderRadius: 20, position: "relative", top: 35 }}
+              addonAfter={sorter}
             />
           </Col>
-          <Col xs={24} md={12}></Col>
+          <Col xs={24} md={8}></Col>
         </Row>
       </PageHeader>
       <List
         itemLayout="vertical"
         size="large"
-        dataSource={filterFAQ(faq, searchValue)}
+        dataSource={sortFAQ(filterFAQ(faq, searchValue), sortState)}
         renderItem={(item, i) => (
           <List.Item key={item.tag}>
             <Card
@@ -175,7 +234,7 @@ const FAQList = () => {
                   style={{ marginBottom: 10 }}
                   title={
                     <p style={{ fontSize: 14, fontWeight: "normal" }}>{`Last Updated: ${
-                      item.last_updated ? item.last_updated.split(" ").slice(0, 4).join(" ") : ""
+                      item.last_updated ? new Date(item.last_updated).toLocaleString().split(", ")[0] : ""
                     }`}</p>
                   }
                   description={item.patterns.map((p, i) => (

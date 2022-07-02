@@ -83,10 +83,11 @@ const DataTable = ({ data, type }) => {
     setSearchText("");
   };
   const formatDate = (date) => {
-    let newDate = date.split(" ");
-    newDate[0] = newDate[0].slice(0, newDate[0].length - 1);
-    newDate[1] = newDate[1][0] === "0" ? newDate[1].slice(1) : newDate[1];
-    return newDate.slice(0, 4).join(" ");
+    return new Date(date).toLocaleString().split(", ")[0];
+    // let newDate = date.split(" ");
+    // newDate[0] = newDate[0].slice(0, newDate[0].length - 1);
+    // newDate[1] = newDate[1][0] === "0" ? newDate[1].slice(1) : newDate[1];
+    // return newDate.slice(0, 4).join(" ");
   };
 
   const conversationsColumns = [

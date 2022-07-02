@@ -54,7 +54,9 @@ const ShowConversation = () => {
   function cancel(e) {
     message.error("Canceled");
   }
-
+  const formatDate = (date) => {
+    return new Date(date).toLocaleString();
+  };
   if (Object.keys(convo).length <= 0) {
     return null;
   }
@@ -94,7 +96,7 @@ const ShowConversation = () => {
           </Descriptions.Item>
           <Descriptions.Item label="Email">{convo.conversation.email}</Descriptions.Item>
           <Descriptions.Item label="Program">{convo.conversation.program}</Descriptions.Item>
-          <Descriptions.Item label="Date">{convo.conversation.date}</Descriptions.Item>
+          <Descriptions.Item label="Date">{formatDate(convo.conversation.date)}</Descriptions.Item>
         </Descriptions>
       </PageHeader>
 

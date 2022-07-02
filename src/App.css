@@ -85,8 +85,8 @@ textarea.ant-input {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background-color: #79c7c5;
-  box-shadow: 0px 7px 0px #79c7c5, 0px 14px 0px #79c7c5;
+  background-color: skyblue;
+  box-shadow: 0px 7px 0px skyblue, 0px 14px 0px skyblue;
 }
 
 .bubble {
@@ -117,4 +117,86 @@ textarea.ant-input {
 .gradient3 {
   background: rgb(191, 222, 241);
   background: linear-gradient(90deg, rgba(191, 222, 241, 1) 25%, rgba(246, 246, 246, 1) 79%);
+}
+
+/**
+ * ==============================================
+ * Dot Pulse
+ * ==============================================
+ */
+.dot-pulse {
+  position: relative;
+  left: -9999px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: skyblue;
+  color: skyblue;
+  box-shadow: 9999px 0 0 -5px skyblue;
+  animation: dotPulse 1.5s infinite linear;
+  animation-delay: 0.25s;
+}
+
+.dot-pulse::before,
+.dot-pulse::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: skyblue;
+  color: skyblue5;
+}
+
+.dot-pulse::before {
+  box-shadow: 9984px 0 0 -5px skyblue;
+  animation: dotPulseBefore 1.5s infinite linear;
+  animation-delay: 0s;
+}
+
+.dot-pulse::after {
+  box-shadow: 10014px 0 0 -5px skyblue;
+  animation: dotPulseAfter 1.5s infinite linear;
+  animation-delay: 0.5s;
+}
+
+@keyframes dotPulseBefore {
+  0% {
+    box-shadow: 9984px 0 0 -5px skyblue;
+  }
+  30% {
+    box-shadow: 9984px 0 0 2px skyblue;
+  }
+  60%,
+  100% {
+    box-shadow: 9984px 0 0 -5px skyblue;
+  }
+}
+
+@keyframes dotPulse {
+  0% {
+    box-shadow: 9999px 0 0 -5px skyblue;
+  }
+  30% {
+    box-shadow: 9999px 0 0 2px skyblue;
+  }
+  60%,
+  100% {
+    box-shadow: 9999px 0 0 -5px skyblue;
+  }
+}
+
+@keyframes dotPulseAfter {
+  0% {
+    box-shadow: 10014px 0 0 -5px skyblue;
+  }
+  30% {
+    box-shadow: 10014px 0 0 2px skyblue;
+  }
+  60%,
+  100% {
+    box-shadow: 10014px 0 0 -5px skyblue;
+  }
 }
