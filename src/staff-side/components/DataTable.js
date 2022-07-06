@@ -92,6 +92,14 @@ const DataTable = ({ data, type }) => {
 
   const conversationsColumns = [
     {
+      title: "Student ID",
+      dataIndex: "student_id",
+      key: "student_id",
+      ellipsis: true,
+      filterSearch: (input, record) => record.value.indexOf(input) > -1,
+      ...getColumnSearchProps("student_id"),
+    },
+    {
       title: "First Name",
       dataIndex: "firstname",
       key: "firstname",

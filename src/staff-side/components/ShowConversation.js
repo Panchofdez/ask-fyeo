@@ -90,13 +90,14 @@ const ShowConversation = () => {
           </Space>,
         ]}
       >
-        <Descriptions size="middle" column={2}>
+        <Descriptions size="middle" column={3}>
+          <Descriptions.Item label="Student ID">{convo.conversation.student_id}</Descriptions.Item>
           <Descriptions.Item label="Name">
             {convo.conversation.firstname} {convo.conversation.lastname}
           </Descriptions.Item>
+          <Descriptions.Item label="Date">{formatDate(convo.conversation.date)}</Descriptions.Item>
           <Descriptions.Item label="Email">{convo.conversation.email}</Descriptions.Item>
           <Descriptions.Item label="Program">{convo.conversation.program}</Descriptions.Item>
-          <Descriptions.Item label="Date">{formatDate(convo.conversation.date)}</Descriptions.Item>
         </Descriptions>
       </PageHeader>
 

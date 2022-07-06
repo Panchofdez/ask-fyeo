@@ -29,13 +29,6 @@ const Dashboard = () => {
       setChartData(response.data);
     } catch (e) {
       message.error(e.response.data.error);
-      if (e.response.status === 403 || e.response.status === 401) {
-        navigate("/");
-        setTokenHeader();
-        if (localStorage.getItem("token")) {
-          localStorage.removeItem("token");
-        }
-      }
     }
   };
 

@@ -69,7 +69,7 @@ const Chatbot = () => {
     setConvo(convoState);
     try {
       setChatState(WAITING_STATE);
-      await sleep(3000);
+      await sleep(2000);
       const conversation_id = conversationDetails.id;
       const botResponse = await api.post("/chat/answer", {
         question,
@@ -305,6 +305,13 @@ const Chatbot = () => {
             onFinishFailed={() => {}}
             autoComplete="off"
           >
+            <Form.Item
+              label="Student ID"
+              name="student_id"
+              rules={[{ required: true, message: "Please input your student id" }]}
+            >
+              <Input />
+            </Form.Item>
             <Form.Item
               label="First Name"
               name="firstname"
