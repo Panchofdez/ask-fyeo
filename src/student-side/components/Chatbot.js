@@ -103,6 +103,17 @@ const Chatbot = () => {
 
   const onFinish = async (values) => {
     try {
+      let email = values.email;
+      let studentId = values.student_id;
+      if (email.toLowerCase().indexOf("ryerson.ca") === -1 && email.toLowerCase().indexOf("torontomu.ca") === -1) {
+        message.error("Invalid Email, please try again");
+        return;
+      }
+
+      if (!/^[0-9]+$/.test(studentId)) {
+        message.error("Invalid student id format, please try again");
+        return;
+      }
       const response = await api.post("/chat/start", values);
       const { conversation } = response.data;
 
