@@ -70,9 +70,10 @@ const Settings = () => {
       message.error("Invalid email");
       return;
     }
-    const isRyersonEmail = email.split("@").at(1).startsWith("ryerson");
+    const isRyersonEmail =
+      email.split("@").at(1).startsWith("ryerson") || email.split("@").at(1).startsWith("torontomu");
     if (!isRyersonEmail) {
-      message.error("Must be a Ryerson email");
+      message.error("Must be a TMU email");
       return;
     }
     addStaff(email);
@@ -140,9 +141,9 @@ const Settings = () => {
                 autoComplete="off"
               >
                 <Form.Item
-                  label="Ryerson Email"
+                  label="TMU Email"
                   name="email"
-                  rules={[{ required: true, message: "Please enter the staff member's ryerson email" }]}
+                  rules={[{ required: true, message: "Please enter the staff member's TMU email" }]}
                 >
                   <Input />
                 </Form.Item>
