@@ -206,15 +206,12 @@ const Chatbot = () => {
       {
         user: "bot",
         response:
-          "I'm sorry that I was not able to answer your question. Please send your question to firstyeareng@ryerson.ca and one of our team members will be able to assist you. ",
+          "I'm sorry that I was not able to answer your question. Please send your question to firstyeareng@torontomu.ca and one of our team members will be able to assist you. ",
       },
-      {
-        user: "bot",
-        response: "Would you prefer to be contacted by a staff member instead?",
-      },
+      { user: "bot", response: "Ask me another question if you have more" },
     ];
     setConvo(convoState);
-    setChatState(CONTACT_STATE);
+    setChatState(NORMAL_STATE);
     setMascotType(1);
   };
 
@@ -245,7 +242,7 @@ const Chatbot = () => {
                       if (chatState === CHECK_RESPONSE_STATE) {
                         resolveQuery(convo);
                       } else {
-                        contactStudent(convo);
+                        // contactStudent(convo);
                       }
                     }}
                   >
@@ -256,7 +253,7 @@ const Chatbot = () => {
                       if (chatState === CHECK_RESPONSE_STATE) {
                         inaccurateResponse(convo);
                       } else {
-                        denyContact(convo);
+                        // denyContact(convo);
                       }
                     }}
                   >

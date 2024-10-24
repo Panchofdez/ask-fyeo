@@ -13,7 +13,12 @@ const Dashboard = () => {
     let isReady = true;
     const setUp = () => {
       if (isReady) {
-        getStats();
+        const currentDate = new Date();
+        let fromDate = getStartOfWeek(currentDate);
+        let year = fromDate.getFullYear();
+        let month = fromDate.getMonth() + 1;
+        let day = fromDate.getDate();
+        getStatsByDate(year, month, day);
         getChartData();
       }
     };
@@ -22,6 +27,13 @@ const Dashboard = () => {
       isReady = false;
     };
   }, []);
+
+  const getStartOfWeek = (d) => {
+    d = new Date(d);
+    var day = d.getDay(),
+      diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+    return new Date(d.setDate(diff));
+  };
 
   const getChartData = async () => {
     try {

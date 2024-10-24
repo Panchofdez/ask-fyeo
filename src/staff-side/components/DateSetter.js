@@ -81,7 +81,7 @@ const DateSetter = ({ getByDate, getByDateRange, getAll }) => {
   };
   return (
     <>
-      <Select defaultValue="alltime" style={{ width: 180 }} onChange={handleChange}>
+      <Select defaultValue="week" style={{ width: 180 }} onChange={handleChange}>
         <Option value="week">This Week</Option>
         <Option value="month">This Month</Option>
         <Option value="year">This Year</Option>
