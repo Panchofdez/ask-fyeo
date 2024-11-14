@@ -9,6 +9,14 @@ const Home = () => {
     const pingAPI = () => {
       api.get("/");
     };
+    if (sessionStorage.getItem("hasRefreshedHome") === null || sessionStorage.getItem("hasRefreshedHome") === "false") {
+      // Reload the page
+      window.location.reload();
+
+      // Set a flag in sessionStorage to prevent further reloads
+      sessionStorage.setItem("hasRefreshedHome", "true");
+      sessionStorage.setItem("hasRefreshedStaff", "false");
+    }
     pingAPI();
   }, []);
   return (
@@ -19,22 +27,23 @@ const Home = () => {
           display: "flex",
           flexDirection: "row",
           justifyContent: "center",
-          zIndex: 3,
-          marginBottom: "20vh",
+          // zIndex: 3,
+          marginBottom: "10vh",
         }}
       >
-        <Col xs={24} md={12}>
+        <Col xs={24}>
           <Header />
         </Col>
-        <Col xs={24} md={12}>
+        {/* <Col xs={24}>
           <Row>
             <Col xs={0} md={2}></Col>
             <Col xs={24} md={20}>
               <Chatbot />
+              <iframe src="https://ask-fyeo.streamlit.app/?embed=true" style="height: 450px; width: 100%;"></iframe>
             </Col>
             <Col xs={0} md={2}></Col>
           </Row>
-        </Col>
+        </Col> */}
       </Row>
     </div>
   );

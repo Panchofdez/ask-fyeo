@@ -36,12 +36,12 @@ const Header = () => {
             }}
           >
             <Space size={width >= 768 ? "large" : "small"} direction={width >= 768 ? "horizontal" : "vertical"}>
-              <Image width={200} src={Logo} preview={false} />
-              <Image width={200} src={TMU} preview={false} />
+              <Image width={150} src={Logo} preview={false} />
+              <Image width={150} src={TMU} preview={false} />
             </Space>
           </Col>
         </Row>
-        <h1 style={{ fontSize: 60, fontWeight: 800, letterSpacing: 1, marginTop: 20 }}>Ask FYEO</h1>
+        <h1 style={{ fontSize: 50, fontWeight: 800, letterSpacing: 1, marginTop: 20 }}>Ask FYEO</h1>
         <h4>
           A web-based resource for first year engineering students. This tool is available to you 24 hours a day, 7 days
           a week, and 365 days a year

@@ -28,9 +28,59 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Ask FYEO</title>
+    <style>
+      body {
+        flex: 1;
+        background: rgb(191, 222, 241);
+        background: linear-gradient(90deg, rgba(191, 222, 241, 1) 24%, rgba(246, 246, 246, 1) 66%);
+        position: relative;
+      }
+      .flex-item {
+        position: absolute;
+        top: 80%;
+        left: 10%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        background-color: white;
+        height: 800px;
+        width: 80vw;
+        margin-top: 50px;
+      }
+
+      #root {
+        min-height: 100vh;
+      }
+
+      @media (max-width: 800px) {
+        .flex-item {
+          top: 100%;
+          left: 0%;
+          width: 100vw;
+        }
+      }
+      @media (min-width: 1200px) {
+        .flex-item {
+          top: 60%;
+        }
+      }
+    </style>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script>
+      window.addEventListener("load", function () {
+        const currentPath = window.location.pathname;
+        const iframe = document.getElementById("chatbot");
+        if (currentPath.includes("staff")) {
+          if (iframe) {
+            iframe.style.display = "none";
+          }
+        } else {
+          if (iframe) {
+            iframe.style.display = "block";
+          }
+        }
+      });
+    </script>
     <div id="root"></div>
     <!--
       This HTML file is a template.
@@ -42,5 +92,8 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <div id="chatbot" class="flex-item">
+      <iframe src="https://ask-fyeo.streamlit.app/?embed=true" style="height: 100%; width: 100%; border: none"></iframe>
+    </div>
   </body>
 </html>

@@ -16,6 +16,17 @@ const StaffHome = () => {
       let newKey = getKey();
       if (isReady) {
         setMenuKey(newKey);
+        if (
+          sessionStorage.getItem("hasRefreshedStaff") === null ||
+          sessionStorage.getItem("hasRefreshedStaff") === "false"
+        ) {
+          // Reload the page
+          window.location.reload();
+
+          // Set a flag in sessionStorage to prevent further reloads
+          sessionStorage.setItem("hasRefreshedStaff", "true");
+          sessionStorage.setItem("hasRefreshedHome", "false");
+        }
       }
     };
     setUp();
