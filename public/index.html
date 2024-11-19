@@ -47,13 +47,13 @@
       }
       .flex-item {
         position: absolute;
-        top: 100%; /* Default for mobile */
-        left: 0;
-        width: 100vw;
+        top: 80%;
+        left: 10%;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         border-radius: 12px;
         background-color: white;
         height: 800px;
+        width: 80vw;
         margin-top: 50px;
       }
 
@@ -61,21 +61,16 @@
         min-height: 100vh;
       }
 
-      /* Tablet and up (800px to 1199px) */
-      @media (min-width: 800px) and (max-width: 1199px) {
+      @media (max-width: 800px) {
         .flex-item {
-          top: 80%; /* Adjust for medium-sized screens */
-          left: 10%;
-          width: 80vw;
+          top: 100%;
+          left: 0%;
+          width: 100vw;
         }
       }
-
-      /* Large screens (1200px and up) */
-      @media (min-width: 1200px) {
+      @media (min-width: 1300px) {
         .flex-item {
-          top: 60%; /* Adjust for large screens */
-          left: 10%;
-          width: 80vw;
+          top: 60%;
         }
       }
     </style>
