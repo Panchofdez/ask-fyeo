@@ -27,7 +27,8 @@ const App = () => {
             <Route path="faq/update" element={<UpdateFAQ />} />
             <Route path="faq/add" element={<UpdateFAQ />} />
             <Route path="faq/:id" element={<ShowFAQ />} />
-            <Route path="faq" element={<FAQList />} />
+            <Route path="faq/staff" element={<FAQList for_staff={true}/>} />
+            <Route path="faq" element={<FAQList for_staff={false} />} />    
             <Route path="conversations" element={<ConversationList />} />
             <Route path="conversations/:id" element={<ShowConversation />} />
             <Route path="settings" element={<Settings />} />

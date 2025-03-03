@@ -73,7 +73,7 @@ const ConversationList = () => {
       <PageHeader
         title="Conversations"
         style={{ backgroundColor: "#e6f7ff", minHeight: "150px" }}
-        subTitle="Student convos with the chatbot"
+        subTitle="Chatbot interaction history"
         extra={[
           <DateSetter
             key={1}

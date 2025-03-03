@@ -1,8 +1,5 @@
 import axios from "axios";
 
-//const url = "https://fyeo-chatbot.herokuapp.com";
-
-// const url = "https://fyeo-chatbot.onrender.com";
 
 const url = "https://ask-fyeo-chatbot-68o6.onrender.com";
 

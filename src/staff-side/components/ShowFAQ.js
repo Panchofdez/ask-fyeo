@@ -66,7 +66,7 @@ const ShowFAQ = () => {
       <PageHeader
         title={faq.tag}
         style={{ backgroundColor: "#e6f7ff", minHeight: "150px" }}
-        subTitle="Student questions that were allocated by the chatbot for this FAQ"
+        subTitle="Questions that were allocated by the chatbot for this FAQ"
         onBack={() => navigate(-1)}
         extra={[
           <DateSetter

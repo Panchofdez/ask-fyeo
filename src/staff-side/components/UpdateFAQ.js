@@ -28,7 +28,7 @@ const UpdateFAQ = () => {
 
   const updateFAQ = async () => {
     try {
-      await api.put("/faq", currFAQ);
+      await api.put(`/faq/${currFAQ.id}`, currFAQ);
       message.success("Successfully saved changes");
     } catch (e) {
       message.error(e.response.data.error);
@@ -39,7 +39,7 @@ const UpdateFAQ = () => {
   };
 
   const addFAQ = async () => {
-    const { tag, patterns, responses } = currFAQ;
+    const { tag, patterns, responses, for_staff } = currFAQ;
     if (tag === "" || patterns.length === 0 || responses.length === 0) {
       message.error("You must add a tag and at least 1 valid response and possible question");
       return;
@@ -47,7 +47,11 @@ const UpdateFAQ = () => {
     try {
       await api.post("/faq", currFAQ);
       message.success("You successfully added to the FAQ");
-      navigate("/staff/faq");
+      if (for_staff){
+        navigate("/staff/faq/staff");
+      }else{
+        navigate("/staff/faq");
+      }  
     } catch (e) {
       message.error(e.response.data.error);
       if (e.response.status === 403 || e.response.status === 401) {
@@ -57,10 +61,14 @@ const UpdateFAQ = () => {
   };
   const deleteFAQ = async () => {
     try {
-      const { id } = currFAQ;
+      const { id, for_staff } = currFAQ;
       await api.delete(`/faq/${id}`);
       message.success("Successfully saved changes");
-      navigate("/staff/faq");
+      if (for_staff){
+        navigate("/staff/faq/staff");
+      }else{
+        navigate("/staff/faq");
+      }
     } catch (e) {
       message.error(e.response.data.error);
       if (e.response.status === 403 || e.response.status === 401) {
