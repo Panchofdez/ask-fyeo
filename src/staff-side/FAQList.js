@@ -97,7 +97,6 @@ const FAQList = ({for_staff}) => {
       defaultValue={ALPHABETICAL}
       className="select-after"
       onSelect={(value) => {
-        console.log(value);
         setSortState(value);
       }}
     >
@@ -154,7 +153,7 @@ const FAQList = ({for_staff}) => {
       >
         <Row>
           <Space size={30}>
-            <Statistic title="Total #" value={faq.length - 1} />
+            <Statistic title="Total #" value={faq.length} />
           </Space>
         </Row>
         <Row>

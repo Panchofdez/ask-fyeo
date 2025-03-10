@@ -67,7 +67,6 @@ const ConversationList = () => {
       message.error(e.response.data.error);
     }
   };
-  console.log(conversations);
   return (
     <>
       <PageHeader
