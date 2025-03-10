@@ -4,18 +4,16 @@ import Logo from "../images/logo.png";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import "../App.css";
 const { Sider, Content } = Layout;
+const { SubMenu } = Menu;
 
 const StaffHome = () => {
-  const [menuKey, setMenuKey] = useState("1");
   const location = useLocation();
 
   useEffect(() => {
     let isReady = true;
 
     const setUp = () => {
-      let newKey = getKey();
       if (isReady) {
-        setMenuKey(newKey);
         if (
           sessionStorage.getItem("hasRefreshedStaff") === null ||
           sessionStorage.getItem("hasRefreshedStaff") === "false"
@@ -41,10 +39,13 @@ const StaffHome = () => {
       key = "2";
     } else if (location.pathname.indexOf("questions") !== -1) {
       key = "3";
-    } else if (location.pathname.indexOf("faq") !== -1) {
-      key = "4";
-    } else if (location.pathname.indexOf("settings") !== -1) {
+    }else if (location.pathname.indexOf("faq/staff") !== -1) {
       key = "5";
+    }else if (location.pathname.indexOf("faq") !== -1) {
+      key = "4";
+      
+    } else if (location.pathname.indexOf("settings") !== -1) {
+      key = "6";
     }
     return key;
   };
@@ -64,9 +65,8 @@ const StaffHome = () => {
           style={{ marginTop: 25 }}
           theme="light"
           mode="inline"
-          key={menuKey}
           defaultSelectedKeys={[getKey()]}
-          onSelect={({ key }) => setMenuKey(key)}
+          defaultOpenKeys={['faq']}
         >
           <Menu.Item key="1">
             <Link to="">Dashboard</Link>
@@ -77,10 +77,15 @@ const StaffHome = () => {
           <Menu.Item key="3">
             <Link to="questions">Questions</Link>
           </Menu.Item>
-          <Menu.Item key="4">
-            <Link to="faq">FAQ</Link>
-          </Menu.Item>
-          <Menu.Item key="5">
+          <SubMenu key="faq" title="FAQ">
+            <Menu.Item key="4">
+              <Link to="faq">Student</Link>
+            </Menu.Item>
+            <Menu.Item key="5">
+              <Link to="faq/staff">Staff</Link>
+            </Menu.Item>
+          </SubMenu>
+          <Menu.Item key="6">
             <Link to="settings">Settings</Link>
           </Menu.Item>
         </Menu>

@@ -12,7 +12,7 @@ const ALPHABETICAL_DESC = 1;
 const DESCENDING = 2;
 const ASCENDING = 3;
 
-const FAQList = () => {
+const FAQList = ({for_staff}) => {
   const [faq, setFaq] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [sortState, setSortState] = useState(ALPHABETICAL);
@@ -31,11 +31,11 @@ const FAQList = () => {
     return () => {
       isReady = false;
     };
-  }, []);
+  }, [for_staff]);
 
   const getFAQ = async () => {
     try {
-      const response = await api.get("/faq");
+      const response = await api.get(`/faq?for_staff=${for_staff}`);
       const { FAQ } = response.data;
       setFaq(FAQ);
     } catch (e) {
@@ -97,7 +97,6 @@ const FAQList = () => {
       defaultValue={ALPHABETICAL}
       className="select-after"
       onSelect={(value) => {
-        console.log(value);
         setSortState(value);
       }}
     >
@@ -111,7 +110,7 @@ const FAQList = () => {
   return (
     <>
       <PageHeader
-        title="FAQ"
+        title={for_staff? "Staff FAQ" : "Student FAQ"}
         style={{ backgroundColor: "#e6f7ff", minHeight: "150px", marginBottom: 20 }}
         tags={
           <Popover
@@ -121,7 +120,7 @@ const FAQList = () => {
                 For each FAQ we have 3 statistics:
                 <ul>
                   <li>
-                    # Questions: Number of student questions which the chatbot has classified as the corresponding FAQ
+                    # Questions: Number of questions which the chatbot has classified as the corresponding FAQ
                   </li>
                   <li>
                     Hit Rate: The percentage of all total questions asked that have been classified as the corresponding
@@ -145,7 +144,7 @@ const FAQList = () => {
             key={1}
             onClick={() => {
               sessionStorage.setItem("searchValue", searchValue);
-              navigate("/staff/faq/update", { state: { faq: { tag: "", patterns: [], responses: [] }, mode: "add" } });
+              navigate("/staff/faq/update", { state: { faq: { tag: "", patterns: [], responses: [], for_staff }, mode: "add" } });
             }}
           >
             Add To FAQ
@@ -154,7 +153,7 @@ const FAQList = () => {
       >
         <Row>
           <Space size={30}>
-            <Statistic title="Total #" value={faq.length - 1} />
+            <Statistic title="Total #" value={faq.length} />
           </Space>
         </Row>
         <Row>

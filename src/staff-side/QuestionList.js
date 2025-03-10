@@ -73,7 +73,7 @@ const QuestionList = () => {
       <PageHeader
         title="Questions"
         style={{ backgroundColor: "#e6f7ff", minHeight: "150px" }}
-        subTitle="Student questions and their corresponding chatbot response"
+        subTitle="Question log and corresponding chatbot responses"
         extra={[
           <DateSetter
             key={1}
