@@ -31,7 +31,7 @@ const UpdateFAQ = () => {
       await api.put(`/faq/${currFAQ.id}`, currFAQ);
       message.success("Successfully saved changes");
     } catch (e) {
-      message.error(e.response.data.error);
+      message.error(e.response.data.error, 10);
       if (e.response.status === 403 || e.response.status === 401) {
         navigate("/");
       }
@@ -53,7 +53,7 @@ const UpdateFAQ = () => {
         navigate("/staff/faq");
       }  
     } catch (e) {
-      message.error(e.response.data.error);
+      message.error(e.response.data.error, 10);
       if (e.response.status === 403 || e.response.status === 401) {
         navigate("/");
       }
